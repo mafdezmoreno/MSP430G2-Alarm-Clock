@@ -1,8 +1,6 @@
-//#include <msp430.h>
 #include "msp430g2553.h"
 #include "TimeDate.h"
 #include "Buzzer.h"
-//#include "Buttons.h"
 #include "BuzzerTimer.h"
 #include "ClockTimer.h"
 #include "LCD_interface.h"
@@ -27,7 +25,7 @@ int main(void)
 	return 0;
 }
 
-//Timer ISR
+//Timer ISR to increment seconds
 #pragma vector = TIMER0_A0_VECTOR	//
 __interrupt void Timer_A0(void)		//for TI compiler
 {
@@ -39,12 +37,11 @@ void init(){
 	WDTCTL = WDTPW + WDTHOLD; //Stop watchdog timer
 
     //MCLK=SMCLK=1Mhz
-        //DCOCTL, DCO Control Register
-        DCOCTL = 0;            //clears DCOCTL to set the DCOCLK to the lowest setting.
-        DCOCTL = CALDCO_1MHZ;  //Copy the calibration data
+    //DCOCTL, DCO Control Register
+    DCOCTL = 0;            //clears DCOCTL to set the DCOCLK to the lowest setting.
+    DCOCTL = CALDCO_1MHZ;  //Copy the calibration data
 
-
-        //BCSCTL1, Basic Clock System Control Register 1
-        BCSCTL1 = CALBC1_1MHZ; //Copy the calibration data
+    //BCSCTL1, Basic Clock System Control Register 1
+    BCSCTL1 = CALBC1_1MHZ; //Copy the calibration data
 
 }

@@ -14,8 +14,7 @@ class Time_Date
 {
 public:
     Time_Date();
-    virtual ~Time_Date();
-
+    
     //get char functions
     const char * get_year();
     const char * get_month();
@@ -29,9 +28,7 @@ public:
     //get status functions
         bool get_update_minute();
         bool get_update_hour();
-        bool get_update_day();
-        bool get_update_week();
-        bool get_update_month_year(); //I use this for month & year
+        bool get_update_day(); //used to update the rest of elements
         
     // ! MODIFIER FUNCTIONS
     // To increment values
@@ -48,6 +45,8 @@ public:
         void set_time();
 
         void decrement_hour();
+
+        void update_all(); //set all bools vars to true
 private:
 
     // Register variables
@@ -63,15 +62,12 @@ private:
     // status variables
         bool _update_minute;
         bool _update_hour;
-        bool _update_day;
-        bool _update_wday;
-        bool _update_week;
-        bool _update_month_year; //I use this for month & year
+        bool _update_day; //used to update the rest of elements
 
     // constants
-        const char *wday[7] = { "LUNES", "MARTES",
-                                "MIERCOLES", "JUEVES",
-                                "VIERNES", "SABADO", "DOMINGO"};
+        const char *wday[7] = { "MON", "TUE",
+                                "WED", "THU",
+                                "FRI", "SAT", "SUN"};
  
 
         const char * int_to_string(unsigned char value);
@@ -79,9 +75,7 @@ private:
     // To update status (to refesh value on lcd)
         void update_minute();
         void update_hour();
-        void update_day();
-        void update_week();
-        void update_month_year();
+        void update_day(); //used to update the rest of elements
 };
 
 #endif /* TIMEDATE_H_ */

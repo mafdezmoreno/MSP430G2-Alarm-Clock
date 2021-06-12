@@ -10,10 +10,4 @@
 Buzzer::Buzzer()
 {
     // TODO Auto-generated constructor stub
-
-}
-
-Buzzer::~Buzzer()
-{
-    // TODO Auto-generated destructor stub
 }

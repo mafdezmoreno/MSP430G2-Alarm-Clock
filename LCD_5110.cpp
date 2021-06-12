@@ -49,7 +49,8 @@ void initLCD() {
 void writeCharToLCD(char c) {
     unsigned char i;
     for(i = 0; i < 5; i++) {
-        writeToLCD(LCD5110_DATA, font[c - 0x2D][i]);
+        //writeToLCD(LCD5110_DATA, font[c - 0x2D][i]);
+        writeToLCD(LCD5110_DATA, font[c-0x20][i]);
     }
     writeToLCD(LCD5110_DATA, 0);
 }

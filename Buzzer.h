@@ -6,7 +6,6 @@ class Buzzer
 {
 public:
     Buzzer();
-    virtual ~Buzzer();
 };
 
 #endif /* BUZZER_H_ */

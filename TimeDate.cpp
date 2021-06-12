@@ -18,19 +18,15 @@ Time_Date::Time_Date()
     _month = 11;
     _year = 21;
 
+    update_all();
+}
+
+void Time_Date::update_all(){
+    
     _update_minute = true;
     _update_hour = true;
     _update_day = true;
-    _update_wday = true;
-    _update_week = true;
-    _update_month_year = true;
 }
-
-Time_Date::~Time_Date()
-{
-    // TODO Auto-generated destructor stub
-}
-
 
 const char * Time_Date::int_to_string(unsigned char value){
 
@@ -75,12 +71,10 @@ void Time_Date::increment_day(){
     _wday++;
     if (_nday > 30){
         increment_month();
-        update_month_year();
         _nday = 1;
     }
     if(_wday > 7){
         increment_week();
-        update_week();
         _wday = 1;
     }
 }
@@ -112,12 +106,6 @@ void Time_Date::update_hour(){
 }
 void Time_Date::update_day(){
     _update_day = true;
-}
-void Time_Date::update_week(){
-    _update_week = true;
-}
-void Time_Date::update_month_year(){
-    _update_month_year = true;
 }
 
 // GET FUNCTIONS
@@ -168,22 +156,6 @@ bool Time_Date::get_update_hour(){
 bool Time_Date::get_update_day(){
     if (_update_day){
         _update_day = false;
-        return true;
-    }
-    return false;
-}
-
-bool Time_Date::get_update_week(){
-    if (_update_week){
-        _update_week = false;
-        return true;
-    }
-    return false;
-}
-
-bool Time_Date::get_update_month_year(){
-    if (_update_month_year){
-        _update_month_year = false;
         return true;
     }
     return false;
