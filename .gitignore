@@ -1,6 +1,7 @@
 #Others
 /targetConfigs/
 *.cmd
+.DS_Store
 .ccsproject
 .project
 .cproject
