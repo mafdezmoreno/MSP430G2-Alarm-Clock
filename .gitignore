@@ -6,6 +6,8 @@
 .project
 .cproject
 .settings/
+.idea/
+.launches/
 
 # Prerequisites
 *.d
