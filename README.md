@@ -35,6 +35,8 @@ There are several tools to flash the compiled code into the MSC:
  * [MSP430Flasher](https://www.ti.com/tool/MSP430-FLASHER) cl software and your favourite text editor (more work). A 'upload' make argument can be manually placed inside the CSS generated makefile.
  * [mpsdebuger](https://dlbeer.co.nz/mspdebug/). This was my favourite in the past, but I was unable to make in work, maybe mspdebuger is not compatible with current TI compiler.
 
+[More info about upload code using MSP430Flasher here](https://github.com/mafdezmoreno/Testing_MSP430G2)
+
 ### Hadware Connections:
 
 Connect the following signals from the debugger to the target MCU.
@@ -51,9 +53,9 @@ Connect the following signals from the debugger to the target MCU.
 A Kicad project is included in this repo. This projects include schematics and PCB.
 
 Todo:
- - [] Review of connections
- - [] PCB Design
- - [] Gerber files generation and PCB ordering.
+ - [ ] Review of connections
+ - [ ] PCB Design
+ - [ ] Gerber files generation and PCB ordering.
 
 ## Other Comments and Problems Working With MSP430
 
