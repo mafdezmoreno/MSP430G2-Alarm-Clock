@@ -1,4 +1,4 @@
-#include "LCD_5110.h"
+#include "lcd5110.h"
 #include "msp430g2553.h"
 
 void writeToLCD(unsigned char dataCommand, unsigned char data) {

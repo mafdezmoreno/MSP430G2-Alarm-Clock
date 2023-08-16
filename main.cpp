@@ -1,40 +1,40 @@
-#include "msp430g2553.h"
-#include "TimeDate.h"
-#include "Buzzer.h"
-#include "BuzzerTimer.h"
-#include "ClockTimer.h"
-#include "LCD_interface.h"
-#include "TimeDate.h"
+#include <buzzer.h>
+#include <buzzerTimer.h>
+#include <clockTimer.h>
+#include <lcdInterface.h>
+#include <msp430g2553.h>
+#include <timeDate.h>
+#include <timeDate.h>
 
-void init();
+void initMcu();
 
-Time_Date TD;
+timeDate td;
 
 int main(void)
 {
-	init();
-	ClockTimer CT;
-	Lcd_Interface LI(&TD);
-	while (1)
-	{
-		LI.time_to_lcd();
-		LI.change_time();
-		for(unsigned long i = 200; i>0; i--);     // delay
-	}
-	
-	return 0;
+    initMcu();
+    clockTimer ct;
+    lcdInterface li(&td);
+    while (1)
+    {
+        li.time_to_lcd();
+        li.change_time();
+        for (unsigned long i = 200; i > 0; i--);     // delay
+    }
 }
 
 //Timer ISR to increment seconds
-#pragma vector = TIMER0_A0_VECTOR	//
-__interrupt void Timer_A0(void)		//for TI compiler
+#pragma vector = TIMER0_A0_VECTOR    //
+
+__interrupt void Timer_A0(void)        //for TI compiler
 {
-    TD.increment_second();
+    td.incrementSecond();
 }
 
-void init(){
-	
-	WDTCTL = WDTPW + WDTHOLD; //Stop watchdog timer
+void initMcu()
+{
+
+    WDTCTL = WDTPW + WDTHOLD; //Stop watchdog timer
 
     //MCLK=SMCLK=1Mhz
     //DCOCTL, DCO Control Register

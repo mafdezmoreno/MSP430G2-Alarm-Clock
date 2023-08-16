@@ -1,37 +1,32 @@
-/*
- * TimeDate.cpp
- *
- *  Created on: Jun 5, 2021
- *      Author: mafm
- */
+#include <timeDate.h>
 
-#include "TimeDate.h"
-
-Time_Date::Time_Date()
+timeDate::timeDate()
 {
-    _second = 55;
-    _minute = 44;
-    _hour = 23;
-    _nday = 22;     //day of month
-    _wday = 1;      // 1 = monday, 2 = tuesday ...
-    _week = 24;
-    _month = 11;
-    _year = 21;
+    second = 55;
+    minute = 44;
+    hour = 23;
+    nDay = 22;     //day of month
+    wDay = 1;      // 1 = monday, 2 = tuesday ...
+    week = 24;
+    month = 11;
+    year = 21;
 
-    update_all();
+    updateAll();
 }
 
-void Time_Date::update_all(){
-    
-    _update_minute = true;
-    _update_hour = true;
-    _update_day = true;
+void timeDate::updateAll()
+{
+
+    updatedMinute = true;
+    updatedHour = true;
+    updatedDay = true;
 }
 
-const char * Time_Date::int_to_string(unsigned char value){
+const char *timeDate::intToString(unsigned char value)
+{
 
     std::string s = std::to_string(value);
-    if (value <10)
+    if (value < 10)
         s = "0" + s;
     return s.c_str();
 }
@@ -39,124 +34,168 @@ const char * Time_Date::int_to_string(unsigned char value){
 // ! MODIFIER FUNCTIONS
 // To increment values
 
-void Time_Date::increment_minute(){
-    _minute++;
-    if (_minute >= 60){
-        increment_hour();
-        update_hour();
-        _minute = 0;
+void timeDate::incrementMinute()
+{
+    minute++;
+    if (minute >= 60)
+    {
+        incrementHour();
+        updateHour();
+        minute = 0;
     }
 }
 
-void Time_Date::increment_hour(){
-    _hour++;
-    if (_hour >= 24){
-        increment_day();
-        update_day();
-        _hour = 0;
+void timeDate::incrementHour()
+{
+    hour++;
+    if (hour >= 24)
+    {
+        incrementDay();
+        updateDay();
+        hour = 0;
     }
 }
 
-void Time_Date::decrement_hour(){
-    _hour--;
-    if (_hour <= 0){
+void timeDate::decrementHour()
+{
+    hour--;
+    if (hour <= 0)
+    {
         //increment_day();
         //update_day();
-        _hour = 23;
+        hour = 23;
     }
 }
 
-void Time_Date::increment_day(){
-    _nday++;
-    _wday++;
-    if (_nday > 30){
-        increment_month();
-        _nday = 1;
+void timeDate::incrementDay()
+{
+    nDay++;
+    wDay++;
+    if (nDay > 30)
+    {
+        incrementMonth();
+        nDay = 1;
     }
-    if(_wday > 7){
-        increment_week();
-        _wday = 1;
+    if (wDay > 7)
+    {
+        incrementWeek();
+        wDay = 1;
     }
 }
 
-void Time_Date::increment_second(){
-    _second++;
-    if (_second >= 60){
-        increment_minute();
-        update_minute();
-        _second = 0;
+void timeDate::incrementSecond()
+{
+    second++;
+    if (second >= 60)
+    {
+        incrementMinute();
+        updateMin();
+        second = 0;
     }
 }
-void Time_Date::increment_week(){
-    _wday++;
+
+void timeDate::incrementWeek()
+{
+    wDay++;
 }
-void Time_Date::increment_month(){
-    _wday++;
+
+void timeDate::incrementMonth()
+{
+    month++;
 }
-void Time_Date::increment_year(){
-    _wday++;
+
+void timeDate::incrementYear()
+{
+    year++;
 }
 
 // To update status
-void Time_Date::update_minute(){
-    _update_minute = true;
+void timeDate::updateMin()
+{
+    updatedMinute = true;
 }
-void Time_Date::update_hour(){
-    _update_hour = true;
+
+void timeDate::updateHour()
+{
+    updatedHour = true;
 }
-void Time_Date::update_day(){
-    _update_day = true;
+
+void timeDate::updateDay()
+{
+    updatedDay = true;
 }
 
 // GET FUNCTIONS
 // get char functions
-const char * Time_Date::get_second(){
-    return int_to_string(_second);
+const char *timeDate::getSecond()
+{
+    return intToString(second);
 }
-const char * Time_Date::get_minute(){
-    return int_to_string(_minute);
+
+const char *timeDate::getMinute()
+{
+    return intToString(minute);
 }
-const char * Time_Date::get_hour(){
-    return int_to_string(_hour);
+
+const char *timeDate::getHour()
+{
+    return intToString(hour);
 }
-const char * Time_Date::get_nday(){
-    return int_to_string(_nday);
+
+const char *timeDate::getNday()
+{
+    return intToString(nDay);
 }
-const char * Time_Date::get_wday(){
-    //return int_to_string(_wday);
-    return wday[_wday];
+
+const char *timeDate::getWeekDay()
+{
+    return weekDays[wDay];
 }
-const char * Time_Date::get_week(){
-    return int_to_string(_week);
+
+const char *timeDate::getWeek()
+{
+    return intToString(week);
 }
-const char * Time_Date::get_month(){
-    return int_to_string(_month);
+
+const char *timeDate::getMonth()
+{
+    return intToString(month);
 }
-const char * Time_Date::get_year(){
-    return int_to_string(_year);
+
+const char *timeDate::getYear()
+{
+    return intToString(year);
 }
 
 // get status functions
-bool Time_Date::get_update_minute(){
-    if (_update_minute){
-        _update_minute = false;
+bool timeDate::getUpdateMinute()
+{
+    if (updatedMinute)
+    {
         return true;
     }
     return false;
 }
 
-bool Time_Date::get_update_hour(){
-    if (_update_hour){
-        _update_hour = false;
+bool timeDate::getUpdateHour()
+{
+    if (updatedHour)
+    {
         return true;
     }
     return false;
 }
 
-bool Time_Date::get_update_day(){
-    if (_update_day){
-        _update_day = false;
+bool timeDate::getUpdateDay()
+{
+    if (updatedDay)
+    {
         return true;
     }
     return false;
+}
+
+void timeDate::setTime()
+{
+
 }

@@ -1,18 +1,11 @@
-/*
- * BuzzerTimer.h
- *
- *  Created on: Jun 5, 2021
- *      Author: mafm
- */
-
 #ifndef BUZZERTIMER_H_
 #define BUZZERTIMER_H_
 
-class BuzzerTimer
+class buzzerTimer
 {
 public:
-    BuzzerTimer();
-    virtual ~BuzzerTimer();
+    buzzerTimer();
+    virtual ~buzzerTimer();
 
     //up_timer();
     //stop_timer();

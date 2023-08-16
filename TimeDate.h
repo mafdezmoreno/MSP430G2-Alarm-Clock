@@ -1,81 +1,98 @@
-/*
- * TimeDate.h
- *
- *  Created on: Jun 5, 2021
- *      Author: mafm
- */
-
 #ifndef TIMEDATE_H_
 #define TIMEDATE_H_
 
 #include <string>
 
-class Time_Date
+struct timeType
+{
+    unsigned int hour;
+    unsigned int minute;
+    unsigned int second;
+};
+
+class timeDate
 {
 public:
-    Time_Date();
-    
+    timeDate();
+
     //get char functions
-    const char * get_year();
-    const char * get_month();
-    const char * get_week();
-    const char * get_wday();
-    const char * get_nday();
-    const char * get_hour();
-    const char * get_minute();
-    const char * get_second();
-        
+    const char *getYear();
+
+    const char *getMonth();
+
+    const char *getWeek();
+
+    const char *getWeekDay();
+
+    const char *getNday();
+
+    const char *getHour();
+
+    const char *getMinute();
+
+    const char *getSecond();
+
     //get status functions
-        bool get_update_minute();
-        bool get_update_hour();
-        bool get_update_day(); //used to update the rest of elements
-        
+    bool getUpdateMinute();
+
+    bool getUpdateHour();
+
+    bool getUpdateDay(); //used to update the rest of elements
+
     // ! MODIFIER FUNCTIONS
     // To increment values
 
-        // Normal operation of clock (increment time every second). To be called by the interrupt function
-        void increment_second();
+    // Normal operation of clock (increment time every second). To be called by the interrupt function
+    void incrementSecond();
 
-        void increment_minute();
-        void increment_hour();
-        void increment_day();
-        void increment_week();
-        void increment_month();
-        void increment_year();
-        void set_time();
+    void incrementMinute();
 
-        void decrement_hour();
+    void incrementHour();
 
-        void update_all(); //set all bools vars to true
+    void incrementDay();
+
+    void incrementWeek();
+
+    void incrementMonth();
+
+    void incrementYear();
+
+    void setTime();
+
+    void decrementHour();
+
+    void updateAll(); //set all bools vars to true
 private:
 
     // Register variables
-        unsigned int _year;
-        unsigned int _month;
-        unsigned int _week;
-        unsigned int _wday;
-        unsigned int _nday;
-        int _hour;
-        unsigned int _minute;
-        unsigned char _second;
+    unsigned int year;
+    unsigned int month;
+    unsigned int week;
+    unsigned int wDay;
+    unsigned int nDay;
+    int hour;
+    unsigned int minute;
+    unsigned char second;
 
     // status variables
-        bool _update_minute;
-        bool _update_hour;
-        bool _update_day; //used to update the rest of elements
+    bool updatedMinute;
+    bool updatedHour;
+    bool updatedDay; //used to update the rest of elements
 
     // constants
-        const char *wday[7] = { "MON", "TUE",
-                                "WED", "THU",
-                                "FRI", "SAT", "SUN"};
- 
+    const char *weekDays[7] = {"MON", "TUE",
+                           "WED", "THU",
+                           "FRI", "SAT", "SUN"};
 
-        const char * int_to_string(unsigned char value);
+
+    const char *intToString(unsigned char value);
 
     // To update status (to refesh value on lcd)
-        void update_minute();
-        void update_hour();
-        void update_day(); //used to update the rest of elements
+    void updateMin();
+
+    void updateHour();
+
+    void updateDay(); //used to update the rest of elements
 };
 
 #endif /* TIMEDATE_H_ */
