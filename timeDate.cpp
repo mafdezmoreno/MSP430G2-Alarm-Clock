@@ -170,29 +170,17 @@ const char *timeDate::getYear()
 // get status functions
 bool timeDate::getUpdateMinute()
 {
-    if (updatedMinute)
-    {
-        return true;
-    }
-    return false;
+    return updatedMinute;
 }
 
 bool timeDate::getUpdateHour()
 {
-    if (updatedHour)
-    {
-        return true;
-    }
-    return false;
+    return updatedHour;
 }
 
 bool timeDate::getUpdateDay()
 {
-    if (updatedDay)
-    {
-        return true;
-    }
-    return false;
+    return updatedDay;
 }
 
 void timeDate::setTime()
