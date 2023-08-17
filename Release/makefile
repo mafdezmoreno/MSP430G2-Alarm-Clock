@@ -8,9 +8,9 @@ GEN_OPTS__FLAG :=
 GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
-"./BuzzerTimer.obj" \
-"./ClockTimer.obj" \
-"./TimeDate.obj" \
+"./buzzerTimer.obj" \
+"./clockTimer.obj" \
+"./timeDate.obj" \
 "./alarm.obj" \
 "./buttons.obj" \
 "./buzzer.obj" \
@@ -160,8 +160,8 @@ alarm_clock_msp430.txt: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "BuzzerTimer.obj" "ClockTimer.obj" "TimeDate.obj" "alarm.obj" "buttons.obj" "buzzer.obj" "lcd5110.obj" "lcdInterface.obj" "main.obj" 
-	-$(RM) "BuzzerTimer.d" "ClockTimer.d" "TimeDate.d" "alarm.d" "buttons.d" "buzzer.d" "lcd5110.d" "lcdInterface.d" "main.d" 
+	-$(RM) "buzzerTimer.obj" "clockTimer.obj" "timeDate.obj" "alarm.obj" "buttons.obj" "buzzer.obj" "lcd5110.obj" "lcdInterface.obj" "main.obj" 
+	-$(RM) "buzzerTimer.d" "clockTimer.d" "timeDate.d" "alarm.d" "buttons.d" "buzzer.d" "lcd5110.d" "lcdInterface.d" "main.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

@@ -13,19 +13,16 @@ class alarm
 {
 public:
     explicit alarm(timeType *currentTime);
-
-    void set_alarm(int weekDay, timeType alarmT);
-
-    int get_alarm_state();
-
-    int check_alarm_time(int week_day);
+    void setAlarm(int weekDay, timeType alarmT);
+    int getAlarmState();
+    int checkAlarmTime(int weekDay);
 
 private:
-    bool alarm_state;
-    aTime week_days_alarms[7];
-    timeType *current_time;
+    bool alarmState;
+    aTime weekDaysAlarms[7];
+    timeType *currentTime;
 
-    void clear_alarms();
+    void clearAlarms();
 };
 
 #endif /* ALARM_H_ */

@@ -4,9 +4,9 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../BuzzerTimer.cpp \
-../ClockTimer.cpp \
-../TimeDate.cpp \
+../buzzerTimer.cpp \
+../clockTimer.cpp \
+../timeDate.cpp \
 ../alarm.cpp \
 ../buttons.cpp \
 ../buzzer.cpp \
@@ -18,9 +18,9 @@ CMD_SRCS += \
 ../lnk_msp430g2553.cmd 
 
 OBJS += \
-./BuzzerTimer.obj \
-./ClockTimer.obj \
-./TimeDate.obj \
+./buzzerTimer.obj \
+./clockTimer.obj \
+./timeDate.obj \
 ./alarm.obj \
 ./buttons.obj \
 ./buzzer.obj \
@@ -29,9 +29,9 @@ OBJS += \
 ./main.obj 
 
 CPP_DEPS += \
-./BuzzerTimer.d \
-./ClockTimer.d \
-./TimeDate.d \
+./buzzerTimer.d \
+./clockTimer.d \
+./timeDate.d \
 ./alarm.d \
 ./buttons.d \
 ./buzzer.d \
@@ -40,9 +40,9 @@ CPP_DEPS += \
 ./main.d 
 
 OBJS__QUOTED += \
-"BuzzerTimer.obj" \
-"ClockTimer.obj" \
-"TimeDate.obj" \
+"buzzerTimer.obj" \
+"clockTimer.obj" \
+"timeDate.obj" \
 "alarm.obj" \
 "buttons.obj" \
 "buzzer.obj" \
@@ -51,9 +51,9 @@ OBJS__QUOTED += \
 "main.obj" 
 
 CPP_DEPS__QUOTED += \
-"BuzzerTimer.d" \
-"ClockTimer.d" \
-"TimeDate.d" \
+"buzzerTimer.d" \
+"clockTimer.d" \
+"timeDate.d" \
 "alarm.d" \
 "buttons.d" \
 "buzzer.d" \
@@ -62,9 +62,9 @@ CPP_DEPS__QUOTED += \
 "main.d" 
 
 CPP_SRCS__QUOTED += \
-"../BuzzerTimer.cpp" \
-"../ClockTimer.cpp" \
-"../TimeDate.cpp" \
+"../buzzerTimer.cpp" \
+"../clockTimer.cpp" \
+"../timeDate.cpp" \
 "../alarm.cpp" \
 "../buttons.cpp" \
 "../buzzer.cpp" \

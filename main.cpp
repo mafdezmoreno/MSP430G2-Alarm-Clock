@@ -20,8 +20,8 @@ int main(void)
         if (signalIncrementSec)
         {
             td.incrementSecond();
-            li.time_to_lcd();
-            li.change_time();
+            li.timeToLcd();
+            li.changeTime();
             signalIncrementSec = false;
         }
         for (unsigned long i = 200; i > 0; i--);     // delay
