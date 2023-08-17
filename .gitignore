@@ -41,5 +41,14 @@
 *.exe
 *.out
 *.app
+
+#Others
+
 /Debug/
-/Release/
+/Release/Log/
+*.d_raw
+*.map
+*.txt
+*.xml
+*.hex
+*.opt
