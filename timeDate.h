@@ -31,23 +31,30 @@ public:
     bool getUpdateDay(); //used to update the rest of elements
 
     // Normal operation of clock (increment time every second). To be called by the interrupt function
-    void incrementSecond();
-    void incrementMinute();
-    void incrementHour();
-    void incrementDay();
-    void incrementWeek();
-    void incrementMonth();
     void incrementYear();
-    void setTime();
+    void incrementMonth();
+    void incrementWeek();
+    void incrementMonthDay();
+    void incrementWeekDay();
+    void incrementHour();
+    void incrementMinute();
+    void incrementSecond();
+    void decrementYear();
+    void decrementMonth();
+    void decrementWeek();
+    void decrementMonthDay();
+    void decrementWeekDay();
     void decrementHour();
+    void decrementMinute();
+    void setTime();
     void updateAll(); //set all bool vars to true
 private:
 
     unsigned int year;
     unsigned int month;
     unsigned int week;
-    unsigned int wDay;
-    unsigned int nDay;
+    unsigned int weekDay;
+    unsigned int monthDay;
     timeType currentTime;
 
     bool updatedMinute;

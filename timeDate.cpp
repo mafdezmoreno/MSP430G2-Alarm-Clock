@@ -1,12 +1,12 @@
-#include <timeDate.h>
+#include "timeDate.h"
 
 timeDate::timeDate()
 {
     currentTime.second = 55;
     currentTime.minute = 44;
     currentTime.hour = 23;
-    nDay = 22;     //day of month
-    wDay = 1;      // 1 = monday, 2 = tuesday ...
+    monthDay = 22;     //day of month
+    weekDay = 1;      // 1 = monday, 2 = tuesday ...
     week = 24;
     month = 11;
     year = 21;
@@ -34,23 +34,110 @@ const char *timeDate::intToString(unsigned char value)
 // ! MODIFIER FUNCTIONS
 // To increment values
 
-void timeDate::incrementMinute()
+void timeDate::incrementYear()
 {
-    currentTime.minute++;
-    if (currentTime.minute >= 60)
+    year++;
+    if (year > 2999)
     {
-        incrementHour();
-        updateHour();
-        currentTime.minute = 0;
+        year = 2000;
     }
+}
+
+void timeDate::decrementYear()
+{
+    if (year == 2000)
+    {
+        year = 2999;
+        return;
+    }
+    year--;
+}
+
+void timeDate::incrementMonth()
+{
+    month++;
+    if (month > 12)
+    {
+        incrementYear();
+        month = 0;
+        week = 0;
+    }
+}
+
+void timeDate::decrementMonth()
+{
+    if (month == 0)
+    {
+        month = 12;
+        return;
+    }
+    month--;
+}
+
+void timeDate::incrementWeek()
+{
+    week++;
+}
+
+void timeDate::decrementWeek()
+{
+    if (week == 0)
+    {
+        week = 53;
+        return;
+    }
+    week--;
+}
+
+void timeDate::incrementMonthDay()
+{
+
+    monthDay++;
+    if (monthDay > 31)
+    {
+        // ToDo: Incremented based in current month days (comparat
+        incrementMonth();
+        monthDay = 1;
+    }
+}
+
+void timeDate::decrementMonthDay()
+{
+    if (monthDay == 0)
+    {
+        monthDay = 32;
+    }
+    monthDay--;
+}
+
+
+void timeDate::incrementWeekDay()
+{
+    weekDay++;
+    if (weekDay > 7)
+    {
+        incrementWeek();
+        weekDay = 0;
+    }
+}
+
+void timeDate::decrementWeekDay()
+{
+    if (weekDay == 0)
+    {
+        weekDay = 6;
+        return;
+    }
+    weekDay--;
 }
 
 void timeDate::incrementHour()
 {
     currentTime.hour++;
-    if (currentTime.hour >= 24)
+    if (currentTime.hour > 23)
     {
-        incrementDay();
+        incrementMonthDay();
+        incrementWeek();
         updateDay();
         currentTime.hour = 0;
     }
@@ -58,29 +145,33 @@ void timeDate::incrementHour()
 
 void timeDate::decrementHour()
 {
-    currentTime.hour--;
-    if (currentTime.hour <= 0)
+    if (currentTime.hour == 0)
     {
-        //increment_day();
-        //update_day();
         currentTime.hour = 23;
+        return;
+    }
+    currentTime.hour--;
+}
+
+void timeDate::incrementMinute()
+{
+    currentTime.minute++;
+    if (currentTime.minute > 59)
+    {
+        incrementHour();
+        updateHour();
+        currentTime.minute = 0;
     }
 }
 
-void timeDate::incrementDay()
+void timeDate::decrementMinute()
 {
-    nDay++;
-    wDay++;
-    if (nDay > 30)
+    if (currentTime.minute == 0)
     {
-        incrementMonth();
-        nDay = 1;
+        currentTime.minute = 59;
+        return;
     }
-    if (wDay > 7)
-    {
-        incrementWeek();
-        wDay = 1;
-    }
+    currentTime.minute--;
 }
 
 void timeDate::incrementSecond()
@@ -92,21 +183,6 @@ void timeDate::incrementSecond()
         updateMin();
         currentTime.second = 0;
     }
-}
-
-void timeDate::incrementWeek()
-{
-    wDay++;
-}
-
-void timeDate::incrementMonth()
-{
-    month++;
-}
-
-void timeDate::incrementYear()
-{
-    year++;
 }
 
 // To update status
@@ -144,12 +220,12 @@ const char *timeDate::getHour()
 
 const char *timeDate::getNday()
 {
-    return intToString(nDay);
+    return intToString(monthDay);
 }
 
 const char *timeDate::getWeekDay()
 {
-    return weekDays[wDay];
+    return weekDays[weekDay];
 }
 
 const char *timeDate::getWeek()
