@@ -8,6 +8,7 @@
 void initMcu();
 
 bool signalIncrementSec = false;
+buzzer buz;
 
 int main(void)
 {
@@ -15,6 +16,7 @@ int main(void)
     timeDate td;
     clockTimer ct;
     lcdInterface li(&td);
+    buz.activeBuz(); // Todo: move in activation conditions.
     while (1)
     {
         if (signalIncrementSec)
@@ -39,6 +41,33 @@ __interrupt void Timer_A0(void)        //for TI compiler
         counter = 0;
     }
     counter++;
+
+    static unsigned int start = 0;
+    static unsigned int stop = 40;
+
+    if (buz.getBuzActive())
+    {
+        if (start < 2 * stop)
+        {
+            buz.makeSound();
+            start++;
+        }
+        else if (start < 3 * stop)
+        {
+            start++;
+        }
+        else if (start < 5 * stop)
+        {
+            buz.makeSound();
+            start++;
+        }
+        else if (start < 10 * stop)
+        {
+            start++;
+        }
+        else
+            start = 0;
+    }
 }
 
 void initMcu()
