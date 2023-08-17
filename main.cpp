@@ -1,33 +1,44 @@
-#include <buzzer.h>
-#include <buzzerTimer.h>
-#include <clockTimer.h>
-#include <lcdInterface.h>
+#include "buzzer.h"
+#include "buzzerTimer.h"
+#include "clockTimer.h"
+#include "lcdInterface.h"
 #include <msp430g2553.h>
-#include <timeDate.h>
+#include "timeDate.h"
 
 void initMcu();
 
-timeDate td;
+bool signalIncrementSec = false;
 
 int main(void)
 {
     initMcu();
+    timeDate td;
     clockTimer ct;
     lcdInterface li(&td);
     while (1)
     {
-        li.time_to_lcd();
-        li.change_time();
+        if (signalIncrementSec)
+        {
+            td.incrementSecond();
+            li.time_to_lcd();
+            li.change_time();
+            signalIncrementSec = false;
+        }
         for (unsigned long i = 200; i > 0; i--);     // delay
     }
 }
 
 //Timer ISR to increment seconds
 #pragma vector = TIMER0_A0_VECTOR    //
-
 __interrupt void Timer_A0(void)        //for TI compiler
 {
-    td.incrementSecond();
+    static unsigned long counter = 0;
+    if (counter == 256)
+    {
+        signalIncrementSec = true;
+        counter = 0;
+    }
+    counter++;
 }
 
 void initMcu()

@@ -166,6 +166,7 @@ clean:
 	-@echo ' '
 
 upload:
+	$(MAKE) clean
 	$(MAKE) alarm_clock_msp430.out
 	$(MAKE) alarm_clock_msp430.txt
 	MSP430Flasher -w alarm_clock_msp430.txt -z [VCC]

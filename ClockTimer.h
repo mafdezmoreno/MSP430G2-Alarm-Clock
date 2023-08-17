@@ -7,9 +7,9 @@ class clockTimer
 {
 public:
     clockTimer();
-    void init_timer0();
-    void stop_timer0();
-    void up_timer0();
+    void initTimer0();
+    void stopTimer0();
+    void upTimer0();
 };
 
 #endif /* CLOCKTIMER_H_ */
