@@ -2,9 +2,9 @@
 
 timeDate::timeDate()
 {
-    second = 55;
-    minute = 44;
-    hour = 23;
+    currentTime.second = 55;
+    currentTime.minute = 44;
+    currentTime.hour = 23;
     nDay = 22;     //day of month
     wDay = 1;      // 1 = monday, 2 = tuesday ...
     week = 24;
@@ -36,34 +36,34 @@ const char *timeDate::intToString(unsigned char value)
 
 void timeDate::incrementMinute()
 {
-    minute++;
-    if (minute >= 60)
+    currentTime.minute++;
+    if (currentTime.minute >= 60)
     {
         incrementHour();
         updateHour();
-        minute = 0;
+        currentTime.minute = 0;
     }
 }
 
 void timeDate::incrementHour()
 {
-    hour++;
-    if (hour >= 24)
+    currentTime.hour++;
+    if (currentTime.hour >= 24)
     {
         incrementDay();
         updateDay();
-        hour = 0;
+        currentTime.hour = 0;
     }
 }
 
 void timeDate::decrementHour()
 {
-    hour--;
-    if (hour <= 0)
+    currentTime.hour--;
+    if (currentTime.hour <= 0)
     {
         //increment_day();
         //update_day();
-        hour = 23;
+        currentTime.hour = 23;
     }
 }
 
@@ -85,12 +85,12 @@ void timeDate::incrementDay()
 
 void timeDate::incrementSecond()
 {
-    second++;
-    if (second >= 60)
+    currentTime.second++;
+    if (currentTime.second >= 60)
     {
         incrementMinute();
         updateMin();
-        second = 0;
+        currentTime.second = 0;
     }
 }
 
@@ -129,17 +129,17 @@ void timeDate::updateDay()
 // get char functions
 const char *timeDate::getSecond()
 {
-    return intToString(second);
+    return intToString(currentTime.second);
 }
 
 const char *timeDate::getMinute()
 {
-    return intToString(minute);
+    return intToString(currentTime.minute);
 }
 
 const char *timeDate::getHour()
 {
-    return intToString(hour);
+    return intToString(currentTime.hour);
 }
 
 const char *timeDate::getNday()
