@@ -1,78 +1,57 @@
 #include "lcdInterface.h"
 
-lcdInterface::lcdInterface(timeDate *td)
+lcdInterface::lcdInterface(timeDate *inData)
 {
-    _td = td;
+    data = inData;
     initLCD();
     clean_lcd();
 }
 
 void lcdInterface::clean_lcd()
 {
-    _td->updateAll();
+    data->updateAll();
     time_to_lcd();
-    /*
-    setAddr(_x_sec, _y_sec);
-    writeStringToLCD(_td->getSecond(), 2);
-    setAddr(_x_min, _y_min);
-    writeStringToLCD(_td->getMinute(),2 );
-    writeCharToLCD(0x3a); //":"
-    setAddr(_x_hour, _y_hour);
-    writeStringToLCD(_td->getHour(), 2);
-    writeCharToLCD(0x3a); //":"
-
-    //nday/month/year
-    setAddr(_x_nday,_y_nday);
-    writeStringToLCD(_td->getNday(),2);
-    writeCharToLCD(0x2f); //"/"
-    writeStringToLCD(_td->getMonth(),2);
-    writeCharToLCD(0x2f); //"/"
-    writeStringToLCD(_td->getYear(),2);
-    */
-    //setAddr(0, 3);
-    //writeStringToLCD("00002233445566", 20);
-
 }
 
 void lcdInterface::time_to_lcd()
 {
 
     setAddr(_x_sec, _y_sec);
-    writeStringToLCD(_td->getSecond(), 2);
+    writeStringToLCD(data->getSecond(), 2);
 
-    if (_td->getUpdateMinute())
+    if (data->getUpdateMinute())
     {
         setAddr(_x_min, _y_min);
-        writeStringToLCD(_td->getMinute(), 2);
+        writeStringToLCD(data->getMinute(), 2);
         writeCharToLCD(0x3a); //":"
 
-        if (_td->getUpdateHour())
+        if (data->getUpdateHour())
         {
             setAddr(_x_hour, _y_hour);
-            writeStringToLCD(_td->getHour(), 2);
+            writeStringToLCD(data->getHour(), 2);
             writeCharToLCD(0x3a); //":"
 
             // The rest of values are updated daily
-            if (_td->getUpdateDay())
+            if (data->getUpdateDay())
             {
 
                 //week
                 setAddr(_x_week, _y_week);
                 writeCharToLCD(0x57); //"W"
                 writeCharToLCD(0x3a); //":"
-                writeStringToLCD(_td->getWeek(), 2);
+                writeStringToLCD(data->getWeek(), 2);
 
                 //week day      
                 setAddr(_x_wday, _y_wday);
-                writeStringToLCD(_td->getWeekDay(), 9);
+                writeStringToLCD(data->getWeekDay(), 9);
 
                 //nday/month/year
                 setAddr(_x_nday, _y_nday);
-                writeStringToLCD(_td->getNday(), 2);
+                writeStringToLCD(data->getNday(), 2);
                 writeCharToLCD(0x2f); //"/"
-                writeStringToLCD(_td->getMonth(), 2);
+                writeStringToLCD(data->getMonth(), 2);
                 writeCharToLCD(0x2f); //"/"
-                writeStringToLCD(_td->getYear(), 2);
+                writeStringToLCD(data->getYear(), 2);
 
                 //Battery Level
                 setAddr(_x_bat, _y_bat);
@@ -118,7 +97,7 @@ void lcdInterface::change_time()
 {
 
     static unsigned int position = 3;
-    while (_b.checkStateButtonTime())
+    while (but.checkStateButtonTime())
     {
         switch (position)
         {
@@ -152,13 +131,13 @@ void lcdInterface::change_time()
 void lcdInterface::toggle_hour()
 {
 
-    if (_b.checkStateButtonIncrementValue())
-        _td->incrementHour();
-    else if (_b.checkStateButtonDecrementValue())
-        _td->decrementHour();
+    if (but.checkStateButtonIncrementValue())
+        data->incrementHour();
+    else if (but.checkStateButtonDecrementValue())
+        data->decrementHour();
 
     setAddr(10, 1);
-    writeStringToLCD(_td->getHour(), 2);
+    writeStringToLCD(data->getHour(), 2);
 
     for (unsigned long i = 80000; i > 0; i--);     // delay
 
@@ -176,7 +155,7 @@ void lcdInterface::toggle_minute()
     setAddr(28, 1);
     if (toggle)
     {
-        writeStringToLCD(_td->getMinute(), 2);
+        writeStringToLCD(data->getMinute(), 2);
         toggle = false;
     } else
     {
@@ -194,7 +173,7 @@ void lcdInterface::toggle_nday()
     setAddr(10, 2);
     if (toggle)
     {
-        writeStringToLCD(_td->getNday(), 2);
+        writeStringToLCD(data->getNday(), 2);
         toggle = false;
     } else
     {
@@ -207,7 +186,7 @@ void lcdInterface::toggle_nday()
 
 bool lcdInterface::move_pos()
 {
-    if (_b.checkStateButtonMovePos())
+    if (but.checkStateButtonMovePos())
         return true;
     return false;
 }

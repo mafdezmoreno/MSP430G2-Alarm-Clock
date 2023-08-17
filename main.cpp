@@ -4,7 +4,6 @@
 #include <lcdInterface.h>
 #include <msp430g2553.h>
 #include <timeDate.h>
-#include <timeDate.h>
 
 void initMcu();
 

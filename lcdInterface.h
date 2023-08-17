@@ -8,7 +8,7 @@
 class lcdInterface
 {
 public:
-    lcdInterface (timeDate *td);
+    lcdInterface (timeDate *inData);
     void clean_lcd ();
     void time_to_lcd ();
     void change_time ();
@@ -18,8 +18,8 @@ public:
     bool move_pos ();
 
 private:
-    timeDate *_td;
-    buttons _b;
+    timeDate *data;
+    buttons but;
 
     static const unsigned _wide = 6;
 
