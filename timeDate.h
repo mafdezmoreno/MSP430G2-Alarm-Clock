@@ -20,15 +20,18 @@ public:
     const char *getMonth();
     const char *getWeek();
     const char *getWeekDay();
-    const char *getNday();
+    const char *getMonthDay();
     const char *getHour();
     const char *getMinute();
     const char *getSecond();
 
     //get status functions
-    bool getUpdateMinute();
-    bool getUpdateHour();
-    bool getUpdateDay(); //used to update the rest of elements
+    bool checkUpdatedDate();
+    bool checkUpdatedTime();
+
+    //set status functions
+    bool setTimeOnLcdUpdated();
+    bool setDateOnLcdUpdate();
 
     // Normal operation of clock (increment time every second). To be called by the interrupt function
     void incrementYear();
@@ -47,7 +50,11 @@ public:
     void decrementHour();
     void decrementMinute();
     void setTime();
-    void updateAll(); //set all bool vars to true
+
+    // To update status (to refresh value on lcd)
+    void callUpdateTime();
+    void callUpdateDate(); //used to update the rest of elements
+
 private:
 
     unsigned int year;
@@ -57,20 +64,14 @@ private:
     unsigned int monthDay;
     timeType currentTime;
 
-    bool updatedMinute;
-    bool updatedHour;
-    bool updatedDay; //used to update the rest of elements
+    bool updatedTimeOnLcd;
+    bool updatedDateOnLcd;
 
     const char *weekDays[7] = {"MON", "TUE",
                                "WED", "THU",
                                "FRI", "SAT", "SUN"};
 
     const char *intToString(unsigned char value);
-
-    // To update status (to refresh value on lcd)
-    void updateMin();
-    void updateHour();
-    void updateDay(); //used to update the rest of elements
 };
 
 #endif /* TIMEDATE_H_ */

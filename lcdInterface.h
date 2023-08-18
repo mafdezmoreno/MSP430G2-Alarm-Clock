@@ -11,17 +11,25 @@ public:
     lcdInterface (timeDate *inData);
     void cleanLcd ();
     void timeToLcd ();
+    void dateToLcd ();
+    void batteryLevelToLcd ();
+    void alarm1ToLcd ();
+    void alarm2ToLcd();
+    void dhtToLcd ();
+    void printAll ();
     void changeTime ();
+    void toogleYear ();
+    void toogleMonth ();
+    void toogleWeek ();
+    void toggleMonthDay ();
+    void toggleWeekDay ();
     void toggleHour ();
-    void toggleNday ();
     void toggleMinute ();
     bool movePos ();
-    void callUpdate();
 
 private:
     timeDate *data;
     buttons but;
-    bool outdated = true;
 
     static const unsigned wide = 6;
 
@@ -71,6 +79,9 @@ private:
     static const unsigned yHr = 5;
     static const unsigned xTemp = wide * 8;
     static const unsigned yTemp = 5;
+
+    void delay();
+    void longDelay();
 };
 
 #endif /* LCDINTERFACE_H_ */

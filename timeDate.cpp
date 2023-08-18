@@ -10,16 +10,8 @@ timeDate::timeDate()
     week = 24;
     month = 11;
     year = 21;
-
-    updateAll();
-}
-
-void timeDate::updateAll()
-{
-
-    updatedMinute = true;
-    updatedHour = true;
-    updatedDay = true;
+    updatedTimeOnLcd = false;
+    updatedDateOnLcd = false;
 }
 
 const char *timeDate::intToString(unsigned char value)
@@ -76,6 +68,7 @@ void timeDate::decrementMonth()
 
 void timeDate::incrementWeek()
 {
+    updatedDateOnLcd = false;
     week++;
 }
 
@@ -87,6 +80,7 @@ void timeDate::decrementWeek()
         return;
     }
     week--;
+    updatedDateOnLcd = false;
 }
 
 void timeDate::incrementMonthDay()
@@ -99,6 +93,7 @@ void timeDate::incrementMonthDay()
         incrementMonth();
         monthDay = 1;
     }
+    updatedDateOnLcd = false;
 }
 
 void timeDate::decrementMonthDay()
@@ -108,8 +103,8 @@ void timeDate::decrementMonthDay()
         monthDay = 32;
     }
     monthDay--;
+    updatedDateOnLcd = false;
 }
-
 
 void timeDate::incrementWeekDay()
 {
@@ -119,6 +114,7 @@ void timeDate::incrementWeekDay()
         incrementWeek();
         weekDay = 0;
     }
+    updatedDateOnLcd = false;
 }
 
 void timeDate::decrementWeekDay()
@@ -129,16 +125,17 @@ void timeDate::decrementWeekDay()
         return;
     }
     weekDay--;
+    updatedDateOnLcd = false;
 }
 
 void timeDate::incrementHour()
 {
     currentTime.hour++;
+    updatedTimeOnLcd = false;
     if (currentTime.hour > 23)
     {
         incrementMonthDay();
         incrementWeek();
-        updateDay();
         currentTime.hour = 0;
     }
 }
@@ -151,15 +148,16 @@ void timeDate::decrementHour()
         return;
     }
     currentTime.hour--;
+    updatedTimeOnLcd = false;
 }
 
 void timeDate::incrementMinute()
 {
     currentTime.minute++;
+    updatedTimeOnLcd = false;
     if (currentTime.minute > 59)
     {
         incrementHour();
-        updateHour();
         currentTime.minute = 0;
     }
 }
@@ -172,6 +170,7 @@ void timeDate::decrementMinute()
         return;
     }
     currentTime.minute--;
+    updatedTimeOnLcd = false;
 }
 
 void timeDate::incrementSecond()
@@ -180,25 +179,8 @@ void timeDate::incrementSecond()
     if (currentTime.second >= 60)
     {
         incrementMinute();
-        updateMin();
         currentTime.second = 0;
     }
-}
-
-// To update status
-void timeDate::updateMin()
-{
-    updatedMinute = true;
-}
-
-void timeDate::updateHour()
-{
-    updatedHour = true;
-}
-
-void timeDate::updateDay()
-{
-    updatedDay = true;
 }
 
 // GET FUNCTIONS
@@ -218,7 +200,7 @@ const char *timeDate::getHour()
     return intToString(currentTime.hour);
 }
 
-const char *timeDate::getNday()
+const char *timeDate::getMonthDay()
 {
     return intToString(monthDay);
 }
@@ -244,22 +226,37 @@ const char *timeDate::getYear()
 }
 
 // get status functions
-bool timeDate::getUpdateMinute()
+bool timeDate::checkUpdatedTime()
 {
-    return updatedMinute;
+    return updatedTimeOnLcd;
 }
 
-bool timeDate::getUpdateHour()
+bool timeDate::checkUpdatedDate()
 {
-    return updatedHour;
+    return updatedDateOnLcd;
 }
 
-bool timeDate::getUpdateDay()
+//set status functions
+bool timeDate::setTimeOnLcdUpdated()
 {
-    return updatedDay;
+    updatedTimeOnLcd = true;
+}
+bool timeDate::setDateOnLcdUpdate()
+{
+    updatedDateOnLcd = true;
 }
 
 void timeDate::setTime()
 {
 
+}
+
+void timeDate::callUpdateDate()
+{
+    updatedDateOnLcd = false;
+}
+
+void timeDate::callUpdateTime()
+{
+    updatedTimeOnLcd = false;
 }
