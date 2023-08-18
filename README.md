@@ -25,7 +25,9 @@ There are two principal compiler options:
  * Ti Compiler, included in [CSStudio IDE](https://www.ti.com/tool/CCSTUDIO) (recommended).
  * [GNU Compiler](https://www.ti.com/tool/MSP430-GCC-OPENSOURCE) 
 
-The best way to avoid problems develop in CSStudio and use Ti proprietary problems, but in my case I prefer to generate/update the makefile with CSS and then work with Clion. Trying another options can ba a frustrating process.
+The best way to avoid problems is develop uding CSStudio and Ti compiler. Trying another options can ba a frustrating process.
+
+Anyway, I prefer to generate/update the makefile with CSS and then work with Clion or VSCode.
 
 I've also tried to create a cMake projects, based on [AlexanderSidorenko repo](https://github.com/AlexanderSidorenko/msp-cmake), but with no success by now.
 
