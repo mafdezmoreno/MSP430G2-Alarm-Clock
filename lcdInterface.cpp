@@ -16,19 +16,20 @@ void lcdInterface::cleanLcd()
 
 void lcdInterface::timeToLcd()
 {
-    setAddr(xSec, ySec);
-    writeStringToLcd(data->getSecond(), 2);
-
     if (!data->checkUpdatedTime())
     {
         setAddr(xMin, yMin);
         writeStringToLcd(data->getMinute(), 2);
+        setAddr(xMin + wide * 2, yMin);
         writeCharToLcd(0x3a); //":"
         setAddr(xHour, yHour);
         writeStringToLcd(data->getHour(), 2);
+        setAddr(xHour + wide * 2, yHour);
         writeCharToLcd(0x3a); //":"
         data->setTimeOnLcdUpdated();
     }
+    setAddr(xSec, ySec);
+    writeStringToLcd(data->getSecond(), 2);
 }
 
 void lcdInterface::dateToLcd()
@@ -38,8 +39,11 @@ void lcdInterface::dateToLcd()
         //nday/month/year
         setAddr(xNday, yNday);
         writeStringToLcd(data->getMonthDay(), 2);
+        setAddr(xNday + wide * 2, yNday);
         writeCharToLcd(0x2f); //"/"
+        setAddr(xMonth, yMonth);
         writeStringToLcd(data->getMonth(), 2);
+        setAddr(xMonth + wide * 2, yMonth);
         writeCharToLcd(0x2f); //"/"
         writeStringToLcd(data->getYear(), 2);
         //week year

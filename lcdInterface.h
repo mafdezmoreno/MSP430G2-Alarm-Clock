@@ -57,6 +57,10 @@ private:
     // row 2
     static const unsigned xNday = 18;
     static const unsigned yNday = 2;
+    static const unsigned xMonth = xNday + wide * 3;
+    static const unsigned yMonth = 2;
+    static const unsigned xYear = xMonth + wide * 3;
+    static const unsigned yYear= 2;
 
     // row 3
     static const unsigned xA1 = 0;
