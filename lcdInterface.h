@@ -18,9 +18,9 @@ public:
     void dhtToLcd ();
     void printAll ();
     void changeTime ();
-    void toogleYear ();
-    void toogleMonth ();
-    void toogleWeek ();
+    void toggleYear ();
+    void toggleMonth ();
+    void toggleWeek ();
     void toggleMonthDay ();
     void toggleWeekDay ();
     void toggleHour ();

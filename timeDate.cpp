@@ -109,7 +109,7 @@ void timeDate::decrementMonthDay()
 void timeDate::incrementWeekDay()
 {
     weekDay++;
-    if (weekDay > 7)
+    if (weekDay > 6)
     {
         incrementWeek();
         weekDay = 0;
@@ -244,11 +244,6 @@ bool timeDate::setTimeOnLcdUpdated()
 bool timeDate::setDateOnLcdUpdate()
 {
     updatedDateOnLcd = true;
-}
-
-void timeDate::setTime()
-{
-
 }
 
 void timeDate::callUpdateDate()

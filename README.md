@@ -13,8 +13,8 @@ Warning: LaunchPads with eZ430-RF2500 will not work with linux or mac, look for 
 
 ### Functions Implemented
 
- - [x] Clock
- - [ ] Control to set clock time
+ - [X] Clock
+ - [X] Control to set clock time and date time (of every element).
  - [ ] Alarm
  - [ ] Control to set alarm
  - [ ] Date
@@ -25,7 +25,7 @@ There are two principal compiler options:
  * Ti Compiler, included in [CSStudio IDE](https://www.ti.com/tool/CCSTUDIO) (recommended).
  * [GNU Compiler](https://www.ti.com/tool/MSP430-GCC-OPENSOURCE) 
 
-The best way to avoid problems is develop uding CSStudio and Ti compiler. Trying another options can ba a frustrating process.
+The best way to avoid problems is use CSStudio and Ti compiler. Trying another options can ba a frustrating process.
 
 Anyway, I prefer to generate/update the makefile with CSS and then work with Clion or VSCode.
 
@@ -33,13 +33,13 @@ I've also tried to create a cMake projects, based on [AlexanderSidorenko repo](h
 
 ## Flashing the MCU
 There are several tools to flash the compiled code into the MSC:
- * Code Composer Studio, which uses internally MSP430Flasher (recomended).
+ * Code Composer Studio, which uses internally MSP430Flasher (recommended).
  * [MSP430Flasher](https://www.ti.com/tool/MSP430-FLASHER) cl software and your favourite text editor (more work). A 'upload' make argument can be manually placed inside the CSS generated makefile.
- * [mpsdebuger](https://dlbeer.co.nz/mspdebug/). This was my favourite in the past, but I was unable to make in work, maybe mspdebuger is not compatible with current TI compiler.
+ * [mspdebuger](https://dlbeer.co.nz/mspdebug/). This was my favourite in the past, but I was unable to make in work, maybe mspdebuger is not compatible with current TI compiler.
 
 [More info about upload code using MSP430Flasher here](https://github.com/mafdezmoreno/Testing_MSP430G2)
 
-### Hadware Connections:
+### Hardware Connections:
 
 Connect the following signals from the debugger to the target MCU.
 
@@ -47,8 +47,6 @@ Connect the following signals from the debugger to the target MCU.
  * GND
  * SBWTDIO
  * SBWTCK
- * TXD (if the UART backchannel is to be used)
- * RXD (if the UART backchannel is to be used)
 
 ## Schematics and PCB
 

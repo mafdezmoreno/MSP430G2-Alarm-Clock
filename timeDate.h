@@ -49,7 +49,6 @@ public:
     void decrementWeekDay();
     void decrementHour();
     void decrementMinute();
-    void setTime();
 
     // To update status (to refresh value on lcd)
     void callUpdateTime();
