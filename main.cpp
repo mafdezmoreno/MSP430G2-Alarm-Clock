@@ -26,7 +26,7 @@ int main(void)
             li.changeTime();
             signalIncrementSec = false;
         }
-        for (unsigned long i = 200; i > 0; i--);     // delay
+        ct.delay(500);
     }
 }
 

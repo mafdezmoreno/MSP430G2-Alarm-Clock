@@ -1,4 +1,4 @@
-#include <clockTimer.h>
+#include "clockTimer.h"
 
 clockTimer::clockTimer()
 {
@@ -13,8 +13,10 @@ void clockTimer::initTimer0()
     // Timer0_A Control Register
     TACTL |= TASSEL_1 + ID_3; //+ MC_1;
     // MC_1; //Use UP mode timer
-    // ID_3; //SMCLK/8
+    // ID_3; //SMCLK/8 =
     // TASSEL_1; //Use ACLK as source for timer
+    // ACLK == 32768Hz // Clock source
+    // ACLK/8 = 4096Hz
 }
 
 void clockTimer::stopTimer0()
@@ -30,4 +32,12 @@ void clockTimer::upTimer0()
     TACCR0 = 16; // callback every 3.9 ms (for buzzer)
     TACCTL0 |= CCIE;
     TACTL |= MC_1;
+}
+
+void clockTimer::delay(unsigned msDelay)
+{
+    for (unsigned i = msDelay; i > 1; i--)
+    {
+            __delay_cycles( 1000 );
+    }
 }

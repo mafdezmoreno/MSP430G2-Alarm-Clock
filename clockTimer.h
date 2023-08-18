@@ -10,6 +10,7 @@ public:
     void initTimer0();
     void stopTimer0();
     void upTimer0();
+    void delay(unsigned msDelay);
 };
 
 #endif /* CLOCKTIMER_H_ */
