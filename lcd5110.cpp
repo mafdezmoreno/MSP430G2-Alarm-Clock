@@ -1,21 +1,26 @@
 #include "lcd5110.h"
 #include "msp430g2553.h"
 
-void writeToLCD(unsigned char dataCommand, unsigned char data) {
+void writeToLcd(unsigned char dataCommand, unsigned char data)
+{
     LCD5110_SELECT;
 
-    if(dataCommand) {
+    if (dataCommand)
+    {
         LCD5110_SET_DATA;
-    } else {
+    } else
+    {
         LCD5110_SET_COMMAND;
     }
 
     UCB0TXBUF = data;
-    while(!(IFG2 & UCB0TXIFG));
+    while (!(IFG2 & UCB0TXIFG));
+
     LCD5110_DESELECT;
 }
 
-void initLCD() {
+void initLcd()
+{
 
     P1OUT |= LCD5110_SCE_PIN | LCD5110_DC_PIN;  // Disable LCD, set Data mode
     P1DIR |= LCD5110_SCE_PIN | LCD5110_DC_PIN;  // Set pins to output direction
@@ -30,66 +35,69 @@ void initLCD() {
     UCB0BR1 = 0;
     UCB0CTL1 &= ~UCSWRST;               // clear SW
 
-    __delay_cycles(50000);
+    __delay_cycles(100000);
 
-    writeToLCD(LCD5110_COMMAND, PCD8544_FUNCTIONSET | PCD8544_EXTENDEDINSTRUCTION);
-    writeToLCD(LCD5110_COMMAND, PCD8544_SETVOP | 0x3F);
-    writeToLCD(LCD5110_COMMAND, PCD8544_SETTEMP | 0x02);
-    writeToLCD(LCD5110_COMMAND, PCD8544_SETBIAS | 0x03);
-    writeToLCD(LCD5110_COMMAND, PCD8544_FUNCTIONSET);
-    writeToLCD(LCD5110_COMMAND, PCD8544_DISPLAYCONTROL | PCD8544_DISPLAYNORMAL);
+    writeToLcd(LCD5110_COMMAND, PCD8544_FUNCTIONSET | PCD8544_EXTENDEDINSTRUCTION);
+    writeToLcd(LCD5110_COMMAND, PCD8544_SETVOP | 0x3F);
+    writeToLcd(LCD5110_COMMAND, PCD8544_SETTEMP | 0x02);
+    writeToLcd(LCD5110_COMMAND, PCD8544_SETBIAS | 0x03);
+    writeToLcd(LCD5110_COMMAND, PCD8544_FUNCTIONSET);
+    writeToLcd(LCD5110_COMMAND, PCD8544_DISPLAYCONTROL | PCD8544_DISPLAYNORMAL);
 
-    __delay_cycles(50000);
-    clearLCD();
-    //writeStringToLCD("iniciando...");
-   // __delay_cycles(2000000);
-
+    __delay_cycles(100000);
+    clearLcd();
 }
 
-void writeCharToLCD(char c) {
-    unsigned char i;
-    for(i = 0; i < 5; i++) {
-        //writeToLCD(LCD5110_DATA, font[c - 0x2D][i]);
-        writeToLCD(LCD5110_DATA, font[c-0x20][i]);
-    }
-    writeToLCD(LCD5110_DATA, 0);
-}
-
-void writeStringToLCD(const char *string, int number_characters)
+void writeCharToLcd(char c)
 {
-    int i = number_characters;
-    while(*string){
+    unsigned char i;
+    for (i = 0; i < 5; i++)
+    {
+        //writeToLcd(LCD5110_DATA, font[c - 0x2D][i]);
+        writeToLcd(LCD5110_DATA, font[c - 0x20][i]);
+    }
+    writeToLcd(LCD5110_DATA, 0);
+}
+
+void writeStringToLcd(const char *string, int numberCharacters)
+{
+    int i = numberCharacters;
+    while (*string)
+    {
         i--;
-        writeCharToLCD(*string);
+        writeCharToLcd(*string);
         if (i == 0)
             return;
         *string++;
     }
 }
 
-
-void setAddr(unsigned char xAddr, unsigned char yAddr) {
-    writeToLCD(LCD5110_COMMAND, PCD8544_SETXADDR | xAddr);
-    writeToLCD(LCD5110_COMMAND, PCD8544_SETYADDR | yAddr);
+void setAddr(unsigned char xAddr, unsigned char yAddr)
+{
+    writeToLcd(LCD5110_COMMAND, PCD8544_SETXADDR | xAddr);
+    writeToLcd(LCD5110_COMMAND, PCD8544_SETYADDR | yAddr);
 }
 
-void clearBank(unsigned char bank) {
+void clearBank(unsigned char bank)
+{
     setAddr(0, bank);
     int i = 0;
-    while(i < PCD8544_HPIXELS) {
-        writeToLCD(LCD5110_DATA, 0);
+    while (i < PCD8544_HPIXELS)
+    {
+        writeToLcd(LCD5110_DATA, 0);
         i++;
     }
     setAddr(0, bank);
 }
 
-void clearLCD() {
+void clearLcd()
+{
     setAddr(0, 0);
     int i = 0;
-    while(i < PCD8544_MAXBYTES) {
-        writeToLCD(LCD5110_DATA, 0);
+    while (i < PCD8544_MAXBYTES)
+    {
+        writeToLcd(LCD5110_DATA, 0);
         i++;
     }
     setAddr(0, 0);
 }
-

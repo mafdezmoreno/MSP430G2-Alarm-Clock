@@ -32,14 +32,14 @@
 #define LCD5110_DATA                1
 
 // LCD functions declaration
-void writeToLCD(unsigned char dataCommand, unsigned char data);
-void writeCharToLCD(char c);
-void writeStringToLCD(const char *string, int number_characters);
-void initLCD();
+void writeToLcd(unsigned char dataCommand, unsigned char data);
+void writeCharToLcd(char c);
+void writeStringToLcd(const char *string, int numberCharacters);
+void initLcd();
 
 // Sets LCD address (x = 0..83, y = 0..5)
 void setAddr(unsigned char xAddr, unsigned char yAddr);
-void clearLCD();
+void clearLcd();
 void clearBank(unsigned char bank);
 
 #endif /* LCD5110_H_ */

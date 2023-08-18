@@ -3,7 +3,7 @@
 lcdInterface::lcdInterface(timeDate *inData)
 {
     data = inData;
-    initLCD();
+    initLcd();
     cleanLcd();
 }
 
@@ -17,16 +17,16 @@ void lcdInterface::cleanLcd()
 void lcdInterface::timeToLcd()
 {
     setAddr(xSec, ySec);
-    writeStringToLCD(data->getSecond(), 2);
+    writeStringToLcd(data->getSecond(), 2);
 
     if (!data->checkUpdatedTime())
     {
         setAddr(xMin, yMin);
-        writeStringToLCD(data->getMinute(), 2);
-        writeCharToLCD(0x3a); //":"
+        writeStringToLcd(data->getMinute(), 2);
+        writeCharToLcd(0x3a); //":"
         setAddr(xHour, yHour);
-        writeStringToLCD(data->getHour(), 2);
-        writeCharToLCD(0x3a); //":"
+        writeStringToLcd(data->getHour(), 2);
+        writeCharToLcd(0x3a); //":"
         data->setTimeOnLcdUpdated();
     }
 }
@@ -37,19 +37,19 @@ void lcdInterface::dateToLcd()
     {
         //nday/month/year
         setAddr(xNday, yNday);
-        writeStringToLCD(data->getMonthDay(), 2);
-        writeCharToLCD(0x2f); //"/"
-        writeStringToLCD(data->getMonth(), 2);
-        writeCharToLCD(0x2f); //"/"
-        writeStringToLCD(data->getYear(), 2);
+        writeStringToLcd(data->getMonthDay(), 2);
+        writeCharToLcd(0x2f); //"/"
+        writeStringToLcd(data->getMonth(), 2);
+        writeCharToLcd(0x2f); //"/"
+        writeStringToLcd(data->getYear(), 2);
         //week year
         setAddr(xWeek, yWeek);
-        writeCharToLCD(0x57); //"W"
-        writeCharToLCD(0x3a); //":"
-        writeStringToLCD(data->getWeek(), 2);
+        writeCharToLcd(0x57); //"W"
+        writeCharToLcd(0x3a); //":"
+        writeStringToLcd(data->getWeek(), 2);
         //week day
         setAddr(xWday, yWday);
-        writeStringToLCD(data->getWeekDay(), 3);
+        writeStringToLcd(data->getWeekDay(), 3);
         data->setDateOnLcdUpdate();
     }
 }
@@ -58,31 +58,31 @@ void lcdInterface::batteryLevelToLcd()
 {
     //Battery Level
     setAddr(xBat, yBat);
-    writeCharToLCD(0x42); //"B"
-    writeCharToLCD(0x3a); //":"
-    writeStringToLCD("3", 2);
+    writeCharToLcd(0x42); //"B"
+    writeCharToLcd(0x3a); //":"
+    writeStringToLcd("3", 2);
 }
 
 void lcdInterface::alarm1ToLcd()
 {
     //alarm 1
     setAddr(xA1, yA1);
-    writeStringToLCD("A", 1);
+    writeStringToLcd("A", 1);
     setAddr(xA1Hour, yA1Hour);
-    writeStringToLCD("07:00", 5);
+    writeStringToLcd("07:00", 5);
     setAddr(xA1Days, yA1Days);
-    writeStringToLCD("0000000", 7);
+    writeStringToLcd("0000000", 7);
 }
 
 void lcdInterface::alarm2ToLcd()
 {
     //alarm 2
     setAddr(xA2, yA2);
-    writeStringToLCD("A", 1);
+    writeStringToLcd("A", 1);
     setAddr(xA2Hour, yA2Hour);
-    writeStringToLCD("17:33", 5);
+    writeStringToLcd("17:33", 5);
     setAddr(xA2Days, yA2Days);
-    writeStringToLCD("0000000", 7);
+    writeStringToLcd("0000000", 7);
 }
 
 void lcdInterface::dhtToLcd()
@@ -90,10 +90,10 @@ void lcdInterface::dhtToLcd()
     // Todo: Implement updtedDht on DHT new class
     //humidity
     setAddr(xHr, yHr);
-    writeStringToLCD("HR41%", 5);
+    writeStringToLcd("HR41%", 5);
     //temperature
     setAddr(xTemp, yTemp);
-    writeStringToLCD("24.3C", 5);
+    writeStringToLcd("24.3C", 5);
     //outdated = false;
 }
 
@@ -160,13 +160,13 @@ void lcdInterface::toggleWeekDay()
 
     if (toggle)
     {
-        writeStringToLCD(data->getWeekDay(), 3);
+        writeStringToLcd(data->getWeekDay(), 3);
         toggle = false;
     } else
     {
-        writeCharToLCD(0x5f); //"_"
-        writeCharToLCD(0x5f); //"_"
-        writeCharToLCD(0x5f); //"_"
+        writeCharToLcd(0x5f); //"_"
+        writeCharToLcd(0x5f); //"_"
+        writeCharToLcd(0x5f); //"_"
         toggle = true;
     }
     delay();
@@ -187,8 +187,8 @@ void lcdInterface::toggleMonthDay()
     } else
     {
         setAddr(xNday, yNday);
-        writeCharToLCD(0x5f); //"_"
-        writeCharToLCD(0x5f); //"_"
+        writeCharToLcd(0x5f); //"_"
+        writeCharToLcd(0x5f); //"_"
         toggle = true;
         data->callUpdateDate();
     }
@@ -205,13 +205,14 @@ void lcdInterface::toggleHour()
         else if (but.checkStateButtonDecrementValue())
             data->decrementHour();
         delay();
-        //writeStringToLCD(data->getHour(), 2);
+        //writeStringToLcd(data->getHour(), 2);
+        timeToLcd();
         toggle = false;
     } else
     {
         setAddr(xHour, yHour);
-        writeCharToLCD(0x5f); //"_"
-        writeCharToLCD(0x5f); //"_"
+        writeCharToLcd(0x5f); //"_"
+        writeCharToLcd(0x5f); //"_"
         toggle = true;
         data->callUpdateTime();
     }
@@ -222,15 +223,21 @@ void lcdInterface::toggleMinute()
 {
 
     static bool toggle = true;
-    setAddr(xMin, yMin);
     if (toggle)
     {
-        writeStringToLCD(data->getMinute(), 2);
+        if (but.checkStateButtonIncrementValue())
+            data->incrementHour();
+        else if (but.checkStateButtonDecrementValue())
+            data->decrementHour();
+        delay();
+        timeToLcd();
+        //writeStringToLcd(data->getMinute(), 2);
         toggle = false;
     } else
     {
-        writeCharToLCD(0x5f); //"_"
-        writeCharToLCD(0x5f); //"_"
+        setAddr(xMin, yMin);
+        writeCharToLcd(0x5f); //"_"
+        writeCharToLcd(0x5f); //"_"
         toggle = true;
     }
     delay();
