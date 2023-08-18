@@ -37,12 +37,17 @@ void buttons::initButtonMovePos()
     P2OUT |= BIT0;
 }
 
+bool buttons::buttonIncrementValueOn()
+{
+    return ((P1IN & BIT3) != BIT3);
+}
+
 bool buttons::checkStateButtonIncrementValue()
 {
-    if ((P1IN & BIT3) != BIT3)
+    if (buttonIncrementValueOn())
     {
-        for (unsigned int i = 50; i > 0; i--);     // delay
-        if ((P1IN & BIT3) != BIT3)
+        delay();
+        if (buttonIncrementValueOn())
         {
             return true;
         }
@@ -50,13 +55,21 @@ bool buttons::checkStateButtonIncrementValue()
     return false;
 }
 
+
+
+bool buttons::buttonDecrementValueOn()
+{
+    return ((P1IN & BIT2) != BIT2);
+}
+
+
 bool buttons::checkStateButtonDecrementValue()
 {
     //1.2
-    if ((P1IN & BIT2) != BIT2)
+    if (buttonDecrementValueOn())
     {
-        for (unsigned int i = 50; i > 0; i--);     // delay
-        if ((P1IN & BIT2) != BIT2)
+        delay();
+        if (buttonDecrementValueOn())
         {
             return true;
         }
@@ -70,7 +83,7 @@ bool buttons::checkStateButtonMovePos()
     //2.0
     if ((P2IN & BIT0) != BIT0)
     {
-        for (unsigned int i = 50; i > 0; i--);     // delay
+        delay();
         if ((P2IN & BIT0) != BIT0)
         {
             return true;
@@ -84,11 +97,21 @@ bool buttons::checkStateButtonTime()
     //1.0
     if ((P1IN & BIT0) != BIT0)
     {
-        for (unsigned int i = 50; i > 0; i--);     // delay
+        delay();
         if ((P1IN & BIT0) != BIT0)
         {
             return true;
         }
     }
     return false;
+}
+
+void buttons::delay()
+{
+    __delay_cycles( 1000 );     // 1ms
+}
+
+void buttons::longDelay()
+{
+    __delay_cycles( 100000 ); // 100ms
 }
