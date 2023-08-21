@@ -52,3 +52,6 @@
 *.xml
 *.hex
 *.opt
+*.lck
+*.zip
+*.sch
