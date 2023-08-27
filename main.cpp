@@ -19,7 +19,6 @@ int main(void)
     static unsigned signalButton = 0;
 
     initMcu();
-    timeDate td;
     timeDate td(&signalIncrementMin);
     clockTimer ct;
     buttons but(&alarmOn);
@@ -92,8 +91,6 @@ __interrupt void Timer_A0(void)        //for TI compiler
     }
     counter++;
 
-    static unsigned int start = 0;
-    static unsigned int stop = 40;
     static unsigned start = 0;
     static const unsigned stop = 40;
 

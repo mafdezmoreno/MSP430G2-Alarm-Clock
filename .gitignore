@@ -46,6 +46,7 @@
 
 /Debug/
 /Release/Log/
+3D/
 *.d_raw
 *.map
 *.txt
@@ -55,3 +56,7 @@
 *.lck
 *.zip
 *.sch
+*.pdf
+/in430.h
+/intrinsics.h
+/msp430g2553.h
