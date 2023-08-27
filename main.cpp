@@ -4,6 +4,8 @@
 #include "lcdInterface.h"
 #include <msp430g2553.h>
 #include "timeDate.h"
+#include "alarm.h"
+
 
 void initMcu();
 
@@ -12,11 +14,17 @@ buzzer buz;
 
 int main(void)
 {
+    static bool signalIncrementMin = false;
+    static bool alarmOn = false;
+    static unsigned signalButton = 0;
+
     initMcu();
     timeDate td;
+    timeDate td(&signalIncrementMin);
     clockTimer ct;
     lcdInterface li(&td);
     buz.activeBuz(); // Todo: move in activation conditions.
+    alarm al1(td.getCurrentTime(), td.getCurrentWeekDay());
     while (1)
     {
         if (signalIncrementSec)
