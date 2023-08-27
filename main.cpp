@@ -12,11 +12,15 @@ buzzer buz;
 
 int main(void)
 {
+    static bool signalIncrementMin = false;
+
     initMcu();
     timeDate td;
+    timeDate td(&signalIncrementMin);
     clockTimer ct;
     lcdInterface li(&td);
     buz.activeBuz(); // Todo: move in activation conditions.
+    alarm al1(td.getCurrentTime(), td.getCurrentWeekDay());
     while (1)
     {
         if (signalIncrementSec)

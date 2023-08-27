@@ -10,10 +10,16 @@ struct timeType
     unsigned int second;
 };
 
+struct dateType
+{
+    //Todo
+};
+
 class timeDate
 {
 public:
-    timeDate();
+    timeDate(bool * signalIncrementMin);
+    ~timeDate();
 
     //get char functions
     const char *getYear();
@@ -54,17 +60,21 @@ public:
     void callUpdateTime();
     void callUpdateDate(); //used to update the rest of elements
 
+    const timeType * getCurrentTime();
+    const unsigned * getCurrentWeekDay();
+
 private:
 
     unsigned int year;
     unsigned int month;
     unsigned int week;
-    unsigned int weekDay;
+    unsigned int * weekDay;
     unsigned int monthDay;
-    timeType currentTime;
+    timeType * currentTime;
 
     bool updatedTimeOnLcd;
     bool updatedDateOnLcd;
+    bool * incrementedMin;
 
     const char *weekDays[7] = {"MON", "TUE",
                                "WED", "THU",

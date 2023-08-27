@@ -5,26 +5,26 @@
 
 struct aTime
 {
-    int active;
+    bool active;
     timeType time;
 };
 
 class alarm
 {
 public:
-    explicit alarm(timeType *currentTime);
+    alarm::alarm(const timeType *cTime, const unsigned *weekDay);
     void setAlarm(unsigned weekDay, timeType alarmT);
-    aTime getAlarmState(unsigned weekDay);
-    bool getCurrentAlarmState();
-    aTime checkAlarmTime(unsigned weekDay);
+    aTime getAlarmStatus(unsigned weekDay);
+    bool alarmTimeNow();
+    void stopCurrentAlarm();
     void clearAlarm(unsigned weekDay);
     void clearAllAlarms();
 
 private:
     bool alarmState;
     aTime weekDaysAlarms[7];
-    timeType *currentTime;
-
+    const timeType * currentTime;
+    const unsigned * currentWeekDay;
 };
 
 #endif /* ALARM_H_ */
