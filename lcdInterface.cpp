@@ -1,62 +1,64 @@
 #include "lcdInterface.h"
 
-lcdInterface::lcdInterface(timeDate *inData)
+lcdInterface::lcdInterface (timeDate *inData, alarm *al, buttons * but)
 {
-    data = inData;
+    pButtons = but;
+    timeData = inData;
     initLcd();
     cleanLcd();
+    // Todo create an initialize alarm related variables
 }
 
 void lcdInterface::cleanLcd()
 {
-    data->callUpdateTime();
-    data->callUpdateDate();
+    timeData->callUpdateTime();
+    timeData->callUpdateDate();
     printAll();
 }
 
 void lcdInterface::timeToLcd()
 {
-    if (!data->checkUpdatedTime())
+    if (!timeData->checkUpdatedTime())
     {
         setAddr(xMin, yMin);
-        writeStringToLcd(data->getMinute(), 2);
+        writeStringToLcd(timeData->getMinute(), 2);
         setAddr(xMin + wide * 2, yMin);
         writeCharToLcd(0x3a); //":"
         setAddr(xHour, yHour);
-        writeStringToLcd(data->getHour(), 2);
+        writeStringToLcd(timeData->getHour(), 2);
         setAddr(xHour + wide * 2, yHour);
         writeCharToLcd(0x3a); //":"
-        data->setTimeOnLcdUpdated();
+        timeData->setTimeOnLcdUpdated();
     }
     setAddr(xSec, ySec);
-    writeStringToLcd(data->getSecond(), 2);
+    writeStringToLcd(timeData->getSecond(), 2);
 }
 
 void lcdInterface::dateToLcd()
 {
-    if (!data->checkUpdatedDate())
+    if (!timeData->checkUpdatedDate())
     {
         //week year
         setAddr(xWeek, yWeek);
         writeCharToLcd(0x57); //"W"
         writeCharToLcd(0x3a); //":"
         setAddr(xWeek + wide * 2, yWeek);
-        writeStringToLcd(data->getWeek(), 2);
+        writeStringToLcd(timeData->getWeek(), 2);
         //week day
         setAddr(xWday, yWday);
-        writeStringToLcd(data->getWeekDay(), 3);
-        data->setDateOnLcdUpdate();
+        writeStringToLcd(timeData->getWeekDay(), 3);
+        timeData->setDateOnLcdUpdate();
         //nday/month/year
         setAddr(xNday, yNday);
-        writeStringToLcd(data->getMonthDay(), 2);
+        writeStringToLcd(timeData->getMonthDay(), 2);
         setAddr(xNday + wide * 2, yNday);
         writeCharToLcd(0x2f); //"/"
         setAddr(xMonth, yMonth);
-        writeStringToLcd(data->getMonth(), 2);
+        writeStringToLcd(timeData->getMonth(), 2);
         setAddr(xMonth + wide * 2, yMonth);
         writeCharToLcd(0x2f); //"/"
         setAddr(xYear, yYear);
-        writeStringToLcd(data->getYear(), 2);
+        writeStringToLcd(timeData->getYear(), 2);
     }
 }
 
@@ -118,7 +120,7 @@ void lcdInterface::printAll()
 void lcdInterface::changeTime()
 {
     static unsigned int position = 1;
-    while (but.checkStateButtonTime())
+    while (pButtons->checkTime())
     {
         switch (position)
         {
@@ -145,7 +147,7 @@ void lcdInterface::changeTime()
                 break;
         }
 
-        if (but.checkStateButtonMovePos())
+        if (pButtons->checkMove())
         {
             position++;
             if (position > 7)
@@ -163,10 +165,10 @@ void lcdInterface::toggleWeek()
     static bool toggle = true;
     if (toggle)
     {
-        if (but.checkStateButtonIncrementValue())
-            data->incrementWeek();
-        else if (but.checkStateButtonDecrementValue())
-            data->decrementWeek();
+        if (pButtons->checkIncrement())
+            timeData->incrementWeek();
+        else if (pButtons->checkDecrement())
+            timeData->decrementWeek();
         toggle = false;
     } else
     {
@@ -174,7 +176,7 @@ void lcdInterface::toggleWeek()
         writeCharToLcd(0x5f); //"_"
         writeCharToLcd(0x5f); //"_"
         toggle = true;
-        data->callUpdateDate();
+        timeData->callUpdateDate();
     }
     delay();
     dateToLcd();
@@ -185,10 +187,10 @@ void lcdInterface::toggleWeekDay()
     static bool toggle = true;
     if (toggle)
     {
-        if (but.checkStateButtonIncrementValue())
-            data->incrementWeekDay();
-        else if (but.checkStateButtonDecrementValue())
-            data->decrementWeekDay();
+        if (pButtons->checkIncrement())
+            timeData->incrementWeekDay();
+        else if (pButtons->checkDecrement())
+            timeData->decrementWeekDay();
         toggle = false;
     } else
     {
@@ -197,7 +199,7 @@ void lcdInterface::toggleWeekDay()
         writeCharToLcd(0x5f); //"_"
         writeCharToLcd(0x5f); //"_"
         toggle = true;
-        data->callUpdateDate();
+        timeData->callUpdateDate();
     }
     delay();
     dateToLcd();
@@ -208,10 +210,10 @@ void lcdInterface::toggleMonthDay()
     static bool toggle = true;
     if (toggle)
     {
-        if (but.checkStateButtonIncrementValue())
-            data->incrementMonthDay();
-        else if (but.checkStateButtonDecrementValue())
-            data->decrementMonthDay();
+        if (pButtons->checkIncrement())
+            timeData->incrementMonthDay();
+        else if (pButtons->checkDecrement())
+            timeData->decrementMonthDay();
         toggle = false;
     } else
     {
@@ -219,7 +221,7 @@ void lcdInterface::toggleMonthDay()
         writeCharToLcd(0x5f); //"_"
         writeCharToLcd(0x5f); //"_"
         toggle = true;
-        data->callUpdateDate();
+        timeData->callUpdateDate();
     }
     delay();
     dateToLcd();
@@ -230,10 +232,10 @@ void lcdInterface::toggleMonth()
     static bool toggle = true;
     if (toggle)
     {
-        if (but.checkStateButtonIncrementValue())
-            data->incrementMonth();
-        else if (but.checkStateButtonDecrementValue())
-            data->decrementMonth();
+        if (pButtons->checkIncrement())
+            timeData->incrementMonth();
+        else if (pButtons->checkDecrement())
+            timeData->decrementMonth();
         toggle = false;
     } else
     {
@@ -241,7 +243,7 @@ void lcdInterface::toggleMonth()
         writeCharToLcd(0x5f); //"_"
         writeCharToLcd(0x5f); //"_"
         toggle = true;
-        data->callUpdateDate();
+        timeData->callUpdateDate();
     }
     delay();
     dateToLcd();
@@ -252,10 +254,10 @@ void lcdInterface::toggleYear()
     static bool toggle = true;
     if (toggle)
     {
-        if (but.checkStateButtonIncrementValue())
-            data->incrementYear();
-        else if (but.checkStateButtonDecrementValue())
-            data->decrementYear();
+        if (pButtons->checkIncrement())
+            timeData->incrementYear();
+        else if (pButtons->checkDecrement())
+            timeData->decrementYear();
         toggle = false;
     } else
     {
@@ -263,7 +265,7 @@ void lcdInterface::toggleYear()
         writeCharToLcd(0x5f); //"_"
         writeCharToLcd(0x5f); //"_"
         toggle = true;
-        data->callUpdateDate();
+        timeData->callUpdateDate();
     }
     delay();
     dateToLcd();
@@ -274,10 +276,10 @@ void lcdInterface::toggleHour()
     static bool toggle = true;
     if (toggle)
     {
-        if (but.checkStateButtonIncrementValue())
-            data->incrementHour();
-        else if (but.checkStateButtonDecrementValue())
-            data->decrementHour();
+        if (pButtons->checkIncrement())
+            timeData->incrementHour();
+        else if (pButtons->checkDecrement())
+            timeData->decrementHour();
         toggle = false;
     } else
     {
@@ -285,7 +287,7 @@ void lcdInterface::toggleHour()
         writeCharToLcd(0x5f); //"_"
         writeCharToLcd(0x5f); //"_"
         toggle = true;
-        data->callUpdateTime();
+        timeData->callUpdateTime();
     }
     delay();
     timeToLcd();
@@ -297,10 +299,10 @@ void lcdInterface::toggleMinute()
     static bool toggle = true;
     if (toggle)
     {
-        if (but.checkStateButtonIncrementValue())
-            data->incrementMinute();
-        else if (but.checkStateButtonDecrementValue())
-            data->decrementMinute();
+        if (pButtons->checkIncrement())
+            timeData->incrementMinute();
+        else if (pButtons->checkDecrement())
+            timeData->decrementMinute();
         toggle = false;
     } else
     {
@@ -308,10 +310,93 @@ void lcdInterface::toggleMinute()
         writeCharToLcd(0x5f); //"_"
         writeCharToLcd(0x5f); //"_"
         toggle = true;
-        data->callUpdateTime();
+        timeData->callUpdateTime();
     }
     delay();
     timeToLcd();
+}
+
+void lcdInterface::changeAlarm()
+{
+    // Control-Sequence to change alarm
+    // Button 1 (checkStateButtonMovePos()) long push to activate change mode.
+    // Button 2 to move between fields (days of week)
+    // Button 3 to increment alarm hour (of current day)
+    // Button 3 to increment alarm min (of current day)
+    // Button 2 long push to set alarm (of current day) and break loop
+
+    static unsigned int position = 1;
+    while (pButtons->checkMove()) // Inverted button with change time
+    {
+        switch (position)
+        {
+            case 1 :
+                toggleAlarm1Monday();
+                break;
+            case 2 :
+                toggleAlarm1Tuesday();
+                break;
+            /*
+            case 3 :
+                toggleAlarm1Wednesday();
+                break;
+            case 4 :
+                toggleAlarm1Tuersday();
+                break;
+            case 5 :
+                toggleAlarm1Friday();
+                break;
+            case 6 :
+                toggleAlarm1Saturday();
+                break;
+            case 7 :
+                toggleAlarm1Sunday();
+                break;
+            case 8 :
+                toggleAlarm2Monday();
+                break;
+            case 9 :
+                toggleAlarm2Tuesday();
+                break;
+            case 10 :
+                toggleAlarm2Wednesday();
+                break;
+            case 11:
+                toggleAlarm2Tuersday();
+                break;
+            case 12 :
+                toggleAlarm2Friday();
+                break;
+            case 13:
+                toggleAlarm2Saturday();
+                break;
+            case 14:
+                toggleAlarm2Sunday();
+                break;
+            */
+        }
+
+        if (pButtons->checkTime())
+        {
+            position++;
+            if (position > 14)
+                position = 1;
+            else if (position < 1)
+                position = 7;
+            longDelay();
+        }
+        delay();
+    }
+}
+
+void lcdInterface::toggleAlarm1Monday()
+{
+
+}
+
+void lcdInterface::toggleAlarm1Tuesday()
+{
+
 }
 
 void lcdInterface::delay()
@@ -322,3 +407,5 @@ void lcdInterface::longDelay()
 {   //400 ms delay
     __delay_cycles(400000);
 }
+
+

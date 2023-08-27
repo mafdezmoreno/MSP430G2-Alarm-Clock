@@ -4,11 +4,13 @@
 #include "buttons.h"
 #include "lcd5110.h"
 #include "timeDate.h"
+#include "alarm.h"
 
 class lcdInterface
 {
 public:
-    lcdInterface (timeDate *inData);
+    lcdInterface (timeDate *inData, alarm *al, buttons *but);
+    ~lcdInterface();
     void cleanLcd ();
     void timeToLcd ();
     void dateToLcd ();
@@ -25,11 +27,14 @@ public:
     void toggleWeekDay ();
     void toggleHour ();
     void toggleMinute ();
-    bool movePos ();
 
+    void changeAlarm();
+    void toggleAlarm1Monday();
+    void toggleAlarm1Tuesday();
 private:
-    timeDate *data;
-    buttons but;
+    timeDate *timeData;
+    buttons * pButtons;
+    alarm *alarmData;
 
     static const unsigned wide = 6;
 

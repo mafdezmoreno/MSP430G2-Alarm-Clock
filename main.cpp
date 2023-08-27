@@ -22,17 +22,59 @@ int main(void)
     timeDate td;
     timeDate td(&signalIncrementMin);
     clockTimer ct;
-    lcdInterface li(&td);
-    buz.activeBuz(); // Todo: move in activation conditions.
+    buttons but(&alarmOn);
     alarm al1(td.getCurrentTime(), td.getCurrentWeekDay());
+    lcdInterface li(&td, &al1, &but);
     while (1)
     {
         if (signalIncrementSec)
         {
             td.incrementSecond();
-            li.timeToLcd();
-            li.changeTime();
+            li.printAll();
             signalIncrementSec = false;
+        }
+        if (signalIncrementMin)
+        {
+            alarmOn = al1.alarmTimeNow();
+            static unsigned minCounter = 0;
+            if(alarmOn)
+            {
+                minCounter = 0;
+                buz.activeBuz();
+            }
+            else if (minCounter >= 5)
+            {
+                buz.deactivateBuz();
+                minCounter = 0;
+                signalIncrementMin = false;
+            }
+            minCounter++;
+        }
+        signalButton = but.getSignalButton();
+        switch (signalButton)
+        {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 4:
+                li.changeTime();
+                break;
+            case 8:
+                li.changeAlarm();
+                break;
+            case 16:
+                break;
+        }
+        switch (signalButton)
+        {
+            case 1:
+            case 2:
+            case 4:
+            case 8:
+            case 16:
+                buz.deactivateBuz();
+                // TODO: led light activation;
         }
         ct.delay(500);
     }
@@ -52,6 +94,8 @@ __interrupt void Timer_A0(void)        //for TI compiler
 
     static unsigned int start = 0;
     static unsigned int stop = 40;
+    static unsigned start = 0;
+    static const unsigned stop = 40;
 
     if (buz.getBuzActive())
     {
