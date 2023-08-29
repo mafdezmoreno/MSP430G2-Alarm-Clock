@@ -5,6 +5,8 @@
 #include "lcd5110.h"
 #include "timeDate.h"
 #include "alarm.h"
+#include "stdio.h"
+#include "string.h"
 
 class lcdInterface
 {
@@ -15,7 +17,7 @@ public:
     void timeToLcd ();
     void dateToLcd ();
     void batteryLevelToLcd ();
-    void alarm1ToLcd ();
+    void alarm1ToLcd (const unsigned * currentWeekDay);
     void alarm2ToLcd();
     void dhtToLcd ();
     void printAll ();
@@ -34,7 +36,7 @@ public:
 private:
     timeDate *timeData;
     buttons * pButtons;
-    alarm *alarmData;
+    alarm * pAlarm;
 
     static const unsigned wide = 6;
 

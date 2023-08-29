@@ -4,6 +4,7 @@ lcdInterface::lcdInterface (timeDate *inData, alarm *al, buttons * but)
 {
     pButtons = but;
     timeData = inData;
+    pAlarm = al;
     initLcd();
     cleanLcd();
     // Todo create an initialize alarm related variables
@@ -71,15 +72,31 @@ void lcdInterface::batteryLevelToLcd()
     writeStringToLcd("3", 2);
 }
 
-void lcdInterface::alarm1ToLcd()
+void lcdInterface::alarm1ToLcd(const unsigned * currentWeekDay)
 {
-    //alarm 1
+    const char * pHour;
+    const char * pMin;
+    const char * pAlarms;
+    char temp[6];
+
     setAddr(xA1, yA1);
     writeStringToLcd("A", 1);
+
     setAddr(xA1Hour, yA1Hour);
-    writeStringToLcd("07:00", 5);
+    pHour = pAlarm->hourToString(currentWeekDay);
+    strcpy(temp, pHour);
+    strcat(temp, ":");
+    pMin = pAlarm->minuteToString(currentWeekDay);
+    strcat(temp, pMin);
+    writeStringToLcd(temp, 5);
+
     setAddr(xA1Days, yA1Days);
-    writeStringToLcd("0000000", 7);
+    pAlarms = pAlarm->weekAlarmsToString();
+    writeStringToLcd(pAlarms, 7);
+
+    delete[] pHour;
+    delete[] pMin;
+    delete[] pAlarms;
 }
 
 void lcdInterface::alarm2ToLcd()
