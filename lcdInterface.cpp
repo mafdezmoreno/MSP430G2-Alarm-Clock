@@ -1,10 +1,10 @@
 #include "lcdInterface.h"
 
-lcdInterface::lcdInterface (timeDate *inData, alarm *al, buttons * but)
+lcdInterface::lcdInterface (timeDate *inData, alarm *al1, buttons * but)
 {
     pButtons = but;
     timeData = inData;
-    pAlarm = al;
+    pAlarm1 = al1;
     initLcd();
     cleanLcd();
     // Todo create an initialize alarm related variables
@@ -83,15 +83,15 @@ void lcdInterface::alarm1ToLcd(const unsigned * currentWeekDay)
     writeStringToLcd("A", 1);
 
     setAddr(xA1Hour, yA1Hour);
-    pHour = pAlarm->hourToString(currentWeekDay);
+    pHour = pAlarm1->hourToString(currentWeekDay);
     strcpy(temp, pHour);
     strcat(temp, ":");
-    pMin = pAlarm->minuteToString(currentWeekDay);
+    pMin = pAlarm1->minuteToString(currentWeekDay);
     strcat(temp, pMin);
     writeStringToLcd(temp, 5);
 
     setAddr(xA1Days, yA1Days);
-    pAlarms = pAlarm->weekAlarmsToString();
+    pAlarms = pAlarm1->weekAlarmsToString();
     writeStringToLcd(pAlarms, 7);
 
     delete[] pHour;
@@ -126,11 +126,9 @@ void lcdInterface::printAll()
 {
     timeToLcd();
     dateToLcd();
-    alarm1ToLcd();
+    alarm1ToLcd(timeData->getCurrentWeekDay());
     alarm2ToLcd();
     batteryLevelToLcd();
-    alarm1ToLcd();
-    alarm2ToLcd();
     dhtToLcd();
 }
 
@@ -342,78 +340,143 @@ void lcdInterface::changeAlarm()
     // Button 3 to increment alarm min (of current day)
     // Button 2 long push to set alarm (of current day) and break loop
 
-    static unsigned int position = 1;
-    while (pButtons->checkMove()) // Inverted button with change time
+    static unsigned positionDayAlarm = 0;
+    static unsigned positionHourMin = 0;
+
+    while (pButtons->checkAlarm())
     {
-        switch (position)
+        if (positionDayAlarm < 7)
         {
-            case 1 :
-                toggleAlarm1Monday();
-                break;
-            case 2 :
-                toggleAlarm1Tuesday();
-                break;
-            /*
-            case 3 :
-                toggleAlarm1Wednesday();
-                break;
-            case 4 :
-                toggleAlarm1Tuersday();
-                break;
-            case 5 :
-                toggleAlarm1Friday();
-                break;
-            case 6 :
-                toggleAlarm1Saturday();
-                break;
-            case 7 :
-                toggleAlarm1Sunday();
-                break;
-            case 8 :
-                toggleAlarm2Monday();
-                break;
-            case 9 :
-                toggleAlarm2Tuesday();
-                break;
-            case 10 :
-                toggleAlarm2Wednesday();
-                break;
-            case 11:
-                toggleAlarm2Tuersday();
-                break;
-            case 12 :
-                toggleAlarm2Friday();
-                break;
-            case 13:
-                toggleAlarm2Saturday();
-                break;
-            case 14:
-                toggleAlarm2Sunday();
-                break;
-            */
+            if (positionHourMin == 0)
+            {
+                toggleHourAlarm1(positionDayAlarm);
+            }
+            else if (positionHourMin == 1)
+            {
+                toggleMinAlarm1(positionDayAlarm);
+            }
+            else
+            {
+                toggleDayAlarm1(positionDayAlarm);
+            }
+            delay();
+            alarm1ToLcd(&positionDayAlarm);
+        }
+        else{
+            unsigned tempDay = positionDayAlarm - 7;
+            toggleDayAlarm2(tempDay);
+            delay();
+            alarm1ToLcd(&tempDay);
+        }
+
+        if (pButtons->checkMove())
+        {
+            positionDayAlarm++;
+            if (positionDayAlarm > 6)
+                positionDayAlarm = 0;
+            longDelay();
         }
 
         if (pButtons->checkTime())
         {
-            position++;
-            if (position > 14)
-                position = 1;
-            else if (position < 1)
-                position = 7;
+            positionHourMin++;
+            if (positionHourMin > 2)
+                positionHourMin = 0;
             longDelay();
         }
         delay();
     }
 }
 
-void lcdInterface::toggleAlarm1Monday()
-{
+///
+/// \param dayToToggle Day of the week to activate/deactivate alarm. Monday = 0
 
+void lcdInterface::toggleDayAlarm1(unsigned dayToToggle)
+{
+    static bool toggle = true;
+    if (toggle)
+    {
+        if (pButtons->checkIncrement() ||
+           pButtons->checkDecrement())
+            pAlarm1->toggleActiveDeactive(dayToToggle);
+        toggle = false;
+    } else
+    {
+        setAddr(xA1Days + wide * dayToToggle, yA1Days);
+        writeCharToLcd(0x5f); //"_"
+        toggle = true;
+    }
 }
 
-void lcdInterface::toggleAlarm1Tuesday()
+void lcdInterface::toggleDayAlarm2(unsigned dayToToggle)
 {
+    static bool toggle = true;
+    if (toggle)
+    {
+        if (pButtons->checkIncrement() ||
+            pButtons->checkDecrement())
+            pAlarm1->toggleActiveDeactive(dayToToggle);
+        toggle = false;
+    } else
+    {
+        setAddr(xA2Days + wide * dayToToggle, yA1Days);
+        writeCharToLcd(0x5f); //"_"
+        toggle = true;
+    }
+}
 
+void lcdInterface::toggleHourAlarm1(unsigned dayToToggle)
+{
+    static bool toggle = true;
+    if (toggle)
+    {
+        if (pButtons->checkIncrement())
+        {
+            pAlarm1->incrementHour(&dayToToggle);
+        }
+        else if (pButtons -> checkDecrement())
+        {
+            pAlarm1->decrementHour(&dayToToggle);
+        }
+
+        toggle = false;
+    }
+    else
+    {
+        setAddr(xA1Hour, yA1Hour);
+        writeCharToLcd(0x5f); //"_"
+        writeCharToLcd(0x5f); //"_"
+        setAddr(xA1Days + wide * dayToToggle, yA1Days);
+        writeCharToLcd(0x5f); //"_"
+        toggle = true;
+    }
+}
+
+void lcdInterface::toggleMinAlarm1(unsigned dayToToggle)
+{
+    static bool toggle = true;
+    if (toggle)
+    {
+        if (pButtons->checkIncrement())
+        {
+            pAlarm1->incrementMin(&dayToToggle);
+        }
+        else if (pButtons -> checkDecrement())
+        {
+            pAlarm1->decrementMin(&dayToToggle);
+        }
+
+        toggle = false;
+    }
+    else
+    {
+        setAddr(xA1Hour + wide * 3, yA1Hour);
+        writeCharToLcd(0x5f); //"_"
+        writeCharToLcd(0x5f); //"_"
+        setAddr(xA1Days + wide * dayToToggle, yA1Days);
+        writeCharToLcd(0x5f); //"_"
+        toggle = true;
+    }
 }
 
 void lcdInterface::delay()

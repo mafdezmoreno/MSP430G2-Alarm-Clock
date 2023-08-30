@@ -11,7 +11,7 @@
 class lcdInterface
 {
 public:
-    lcdInterface (timeDate *inData, alarm *al, buttons *but);
+    lcdInterface (timeDate *inData, alarm *al1, buttons *but);
     ~lcdInterface();
     void cleanLcd ();
     void timeToLcd ();
@@ -31,12 +31,17 @@ public:
     void toggleMinute ();
 
     void changeAlarm();
-    void toggleAlarm1Monday();
-    void toggleAlarm1Tuesday();
+    void toggleDayAlarm1(unsigned dayToToggle);
+    void toggleDayAlarm2(unsigned dayToToggle);
+    void toggleHourAlarm1(unsigned dayToToggle);
+    void toggleMinAlarm1(unsigned dayToToggle);
+    void toggleHourAlarm2(unsigned dayToToggle);
+    void toggleMinAlarm2(unsigned dayToToggle);
 private:
-    timeDate *timeData;
+    timeDate * timeData;
     buttons * pButtons;
-    alarm * pAlarm;
+    alarm * pAlarm1;
+    alarm * pAlarm2;
 
     static const unsigned wide = 6;
 

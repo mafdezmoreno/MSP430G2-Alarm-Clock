@@ -19,10 +19,14 @@ public:
     void stopCurrentAlarm();
     void clearAlarm(unsigned weekDay);
     void clearAllAlarms();
-    void toggleAlarm(unsigned weekDay);
+    void toggleActiveDeactive(unsigned weekDay);
     const char * weekAlarmsToString();
     const char * hourToString(const unsigned * weekDay);
     const char * minuteToString(const unsigned * weekDay);
+    void incrementHour(const unsigned * weekDay);
+    void decrementHour(const unsigned * weekDay);
+    void incrementMin(const unsigned  * weekDay);
+    void decrementMin(const unsigned  * weekDay);
 
 private:
     bool alarmState;

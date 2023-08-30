@@ -129,7 +129,7 @@ bool buttons::checkAlarm()
     if (buttonAlarm())
     {
         delay();
-        if (checkAlarm())
+        if (buttonAlarm())
         {
             return deactivateAlarm();
         }

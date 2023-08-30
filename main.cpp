@@ -2,7 +2,7 @@
 #include "buzzerTimer.h"
 #include "clockTimer.h"
 #include "lcdInterface.h"
-#include <msp430g2553.h>
+#include "msp430g2553.h"
 #include "timeDate.h"
 #include "alarm.h"
 

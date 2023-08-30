@@ -94,7 +94,7 @@ const char * alarm::minuteToString(const unsigned * weekDay)
     return str;
 }
 
-void alarm::toggleAlarm(unsigned int weekDay)
+void alarm::toggleActiveDeactive(unsigned int weekDay)
 {
     if(weekDaysAlarms[weekDay].active)
     {
@@ -104,4 +104,50 @@ void alarm::toggleAlarm(unsigned int weekDay)
     {
         weekDaysAlarms[weekDay].active = true;
     }
+}
+
+void alarm::incrementHour(const unsigned * weekDay)
+{
+    unsigned * pHour = &weekDaysAlarms[*weekDay].time.hour;
+
+    (*pHour)++;
+    if (*pHour > 23)
+    {
+        *pHour = 0;
+    }
+}
+
+void alarm::decrementHour(const unsigned * weekDay)
+{
+    unsigned * pHour = &weekDaysAlarms[*weekDay].time.hour;
+
+    if (*pHour == 0)
+    {
+        *pHour = 23;
+        return;
+    }
+    (*pHour)--;
+}
+
+void alarm::incrementMin(const unsigned  * weekDay)
+{
+    unsigned * pMin = &weekDaysAlarms[*weekDay].time.minute;
+
+    (*pMin)++;
+    if (*pMin > 59)
+    {
+        *pMin = 0;
+    }
+}
+
+void alarm::decrementMin(const unsigned  * weekDay)
+{
+    unsigned * pMin = &weekDaysAlarms[*weekDay].time.minute;
+
+    if (*pMin == 0)
+    {
+        *pMin = 59;
+        return;
+    }
+    (*pMin)--;
 }
