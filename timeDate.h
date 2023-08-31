@@ -80,7 +80,7 @@ private:
                                "WED", "THU",
                                "FRI", "SAT", "SUN"};
 
-    const char *intToString(unsigned char value);
+    const char *intToString(unsigned value);
 };
 
 #endif /* TIMEDATE_H_ */

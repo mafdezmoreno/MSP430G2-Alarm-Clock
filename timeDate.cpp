@@ -23,13 +23,15 @@ timeDate::~timeDate()
     delete weekDay;
 }
 
-const char *timeDate::intToString(unsigned char value)
+const char *timeDate::intToString(unsigned value)
 {
+    char * str;
+    str = new char[3] {"00"};
 
-    std::string s = std::to_string(value);
-    if (value < 10)
-        s = "0" + s;
-    return s.c_str();
+    str[0] = value/10 + '0';
+    str[1] = value%10 + '0';
+
+    return str;
 }
 
 void timeDate::incrementYear()

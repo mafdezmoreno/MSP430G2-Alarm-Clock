@@ -19,57 +19,85 @@ void lcdInterface::cleanLcd()
 
 void lcdInterface::timeToLcd()
 {
+    const char *pSecond;
+    pSecond = timeData->getSecond();
+
     if (!timeData->checkUpdatedTime())
     {
-        setAddr(xMin, yMin);
-        writeStringToLcd(timeData->getMinute(), 2);
-        setAddr(xMin + wide * 2, yMin);
-        writeCharToLcd(0x3a); //":"
+        const char *pHour;
+        const char *pMin;
+        char tempStr[7];
+
+        pHour = timeData -> getHour();
+        pMin = timeData->getMinute();
+
+        strcpy(tempStr, pHour);
+        strcat(tempStr, ":");
+        strcat(tempStr, pMin);
+        strcat(tempStr, ":");
+
         setAddr(xHour, yHour);
-        writeStringToLcd(timeData->getHour(), 2);
-        setAddr(xHour + wide * 2, yHour);
-        writeCharToLcd(0x3a); //":"
+
+        writeStringToLcd(tempStr, 6);
         timeData->setTimeOnLcdUpdated();
+
+        delete[] pMin;
+        delete[] pHour;
     }
     setAddr(xSec, ySec);
-    writeStringToLcd(timeData->getSecond(), 2);
+    writeStringToLcd(pSecond, 2);
+    delete[] pSecond;
 }
 
 void lcdInterface::dateToLcd()
 {
     if (!timeData->checkUpdatedDate())
     {
-        //week year
+        const char *pWeek;
+        const char *pDay;
+        const char *pMonth;
+        const char *pYear;
+        char tempWeek[5];
+        char tempDate[9];
+
+        pWeek = timeData ->getWeek();
+        pDay = timeData -> getMonthDay();
+        pMonth = timeData -> getMonth();
+        pYear = timeData -> getYear();
+
+        strcpy(tempWeek, "W:");
+        strcat(tempWeek, pWeek);
         setAddr(xWeek, yWeek);
-        writeCharToLcd(0x57); //"W"
-        writeCharToLcd(0x3a); //":"
-        setAddr(xWeek + wide * 2, yWeek);
-        writeStringToLcd(timeData->getWeek(), 2);
-        //week day
+        writeStringToLcd(tempWeek, 4);
+
         setAddr(xWday, yWday);
         writeStringToLcd(timeData->getWeekDay(), 3);
         timeData->setDateOnLcdUpdate();
-        //nday/month/year
+
+        strcpy(tempDate, pDay);
+        strcat(tempDate, ":");
+        strcat(tempDate, pMonth);
+        strcat(tempDate, ":");
+        strcat(tempDate, pYear);
         setAddr(xNday, yNday);
-        writeStringToLcd(timeData->getMonthDay(), 2);
-        setAddr(xNday + wide * 2, yNday);
-        writeCharToLcd(0x2f); //"/"
-        setAddr(xMonth, yMonth);
-        writeStringToLcd(timeData->getMonth(), 2);
-        setAddr(xMonth + wide * 2, yMonth);
-        writeCharToLcd(0x2f); //"/"
-        setAddr(xYear, yYear);
-        writeStringToLcd(timeData->getYear(), 2);
+        writeStringToLcd(tempDate, 11);
+
+        delete[] pWeek;
+        delete[] pDay;
+        delete[] pMonth;
+        delete[] pYear;
     }
 }
 
 void lcdInterface::batteryLevelToLcd()
 {
-    //Battery Level
+    char temp[4];
+    const char * pBat;
+
+    strcpy(temp, "B:");
+    strcat(temp, "2");     // TODO: Implement battery level read
     setAddr(xBat, yBat);
-    writeCharToLcd(0x42); //"B"
-    writeCharToLcd(0x3a); //":"
-    writeStringToLcd("3", 2);
+    writeStringToLcd(temp,3);
 }
 
 void lcdInterface::alarm1ToLcd(const unsigned * currentWeekDay)
@@ -101,7 +129,6 @@ void lcdInterface::alarm1ToLcd(const unsigned * currentWeekDay)
 
 void lcdInterface::alarm2ToLcd()
 {
-    //alarm 2
     setAddr(xA2, yA2);
     writeStringToLcd("A", 1);
     setAddr(xA2Hour, yA2Hour);
