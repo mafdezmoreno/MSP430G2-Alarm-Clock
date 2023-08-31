@@ -9,7 +9,7 @@
 
 void initMcu();
 
-bool signalIncrementSec = false;
+unsigned signalIncrementSec = 0;
 buzzer buz;
 
 int main(void)
@@ -28,9 +28,12 @@ int main(void)
     {
         if (signalIncrementSec)
         {
-            td.incrementSecond();
+            while(signalIncrementSec)
+            {
+                td.incrementSecond();
+                signalIncrementSec--;
+            }
             li.printAll();
-            signalIncrementSec = false;
         }
         if (signalIncrementMin)
         {
@@ -80,13 +83,13 @@ int main(void)
 }
 
 //Timer ISR to increment seconds
-#pragma vector = TIMER0_A0_VECTOR    //
-__interrupt void Timer_A0(void)        //for TI compiler
+#pragma vector = TIMER0_A0_VECTOR
+__interrupt void Timer_A0(void)
 {
     static unsigned long counter = 0;
     if (counter == 256)
     {
-        signalIncrementSec = true;
+        signalIncrementSec++;
         counter = 0;
     }
     counter++;
