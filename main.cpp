@@ -15,17 +15,17 @@ buzzer buz;
 int main(void)
 {
     static bool signalIncrementMin = false;
-    static bool alarmOn = false;
     static unsigned signalButton = 0;
 
     initMcu();
     timeDate td(&signalIncrementMin);
     clockTimer ct;
-    buttons but(&alarmOn);
+    buttons but;
     alarm al1(td.getCurrentTime(), td.getCurrentWeekDay());
     lcdInterface li(&td, &al1, &but);
     while (1)
     {
+        static bool alarmStarted = false;
         if (signalIncrementSec)
         {
             while(signalIncrementSec)
@@ -37,18 +37,19 @@ int main(void)
         }
         if (signalIncrementMin)
         {
-            alarmOn = al1.alarmTimeNow();
+            signalIncrementMin = false;
             static unsigned minCounter = 0;
-            if(alarmOn)
+            if(!alarmStarted && al1.alarmTimeNow())
             {
                 minCounter = 0;
                 buz.activeBuz();
+                alarmStarted = true;
             }
-            else if (minCounter >= 5)
-            {
+            else if (minCounter >= 5 && alarmStarted)
+            {  // alarm can be on for 5 minutes.
                 buz.deactivateBuz();
                 minCounter = 0;
-                signalIncrementMin = false;
+                alarmStarted = false;
             }
             minCounter++;
         }
@@ -76,6 +77,7 @@ int main(void)
             case 8:
             case 16:
                 buz.deactivateBuz();
+                alarmStarted = false;
                 // TODO: led light activation;
         }
         ct.delay(500);

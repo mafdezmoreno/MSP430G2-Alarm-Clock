@@ -17,12 +17,13 @@ void alarm::setAlarm(unsigned weekDay, timeType alarm)
 bool alarm::alarmTimeNow()
 {
     const aTime *currentStatus = &weekDaysAlarms[*currentWeekDay];
+
     if (!currentStatus->active)
     {
         return false;
     }
     if ((currentTime->hour == currentStatus->time.hour) &
-        (currentTime->hour == currentStatus->time.minute))
+        (currentTime->minute == currentStatus->time.minute))
     {
         return true;
     }

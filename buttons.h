@@ -36,7 +36,7 @@
 class buttons
 {
 public:
-    explicit buttons(bool * alarmOn);
+    buttons();
     bool checkTime();
     bool checkIncrement();
     bool checkMove();
@@ -45,10 +45,6 @@ public:
     unsigned getSignalButton();
 
 private:
-    bool * pAlarmOn;
-
-    bool deactivateAlarm();
-
     static void initTime();
     static bool buttonTime();
     static void initIncrement();

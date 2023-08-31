@@ -1,14 +1,12 @@
 #include "buttons.h"
 
-buttons::buttons(bool * alarmOn)
+buttons::buttons()
 {
     initTime();
     initIncrement();
     initMove();
     initDecrement();
     initAlarm();
-
-    pAlarmOn = alarmOn;
 }
 
 void buttons::initTime()
@@ -78,7 +76,7 @@ bool buttons::checkTime()
         delay();
         if (buttonTime())
         {
-            return deactivateAlarm();
+            return true;
         }
     }
     return false;
@@ -91,7 +89,7 @@ bool buttons::checkIncrement()
         delay();
         if (buttonIncrement())
         {
-            return deactivateAlarm();
+            return true;
         }
     }
     return false;
@@ -105,7 +103,7 @@ bool buttons::checkMove()
         delay();
         if (buttonMove())
         {
-            return deactivateAlarm();
+            return true;
         }
     }
     return false;
@@ -118,7 +116,7 @@ bool buttons::checkDecrement()
         delay();
         if (buttonDecrement())
         {
-            return deactivateAlarm();
+            return true;
         }
     }
     return false;
@@ -131,16 +129,10 @@ bool buttons::checkAlarm()
         delay();
         if (buttonAlarm())
         {
-            return deactivateAlarm();
+            return true;
         }
     }
     return false;
-}
-
-bool buttons::deactivateAlarm()
-{
-    *pAlarmOn = false;
-    return true;
 }
 
 /// Checks all buttons at once and returns a number in some in pressed
