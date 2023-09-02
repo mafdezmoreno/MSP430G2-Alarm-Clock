@@ -11,14 +11,14 @@
 class lcdInterface
 {
 public:
-    lcdInterface (timeDate *inData, alarm *al1, buttons *but);
+    lcdInterface (timeDate *inData, alarm *al1, alarm *al2, buttons *but);
     ~lcdInterface();
     void cleanLcd ();
     void timeToLcd ();
     void dateToLcd ();
     void batteryLevelToLcd ();
     void alarm1ToLcd (const unsigned * currentWeekDay);
-    void alarm2ToLcd();
+    void alarm2ToLcd(const unsigned * currentWeekDay);
     void dhtToLcd ();
     void printAll ();
     void changeTime ();

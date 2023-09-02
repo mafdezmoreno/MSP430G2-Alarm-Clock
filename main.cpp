@@ -22,7 +22,8 @@ int main()
     clockTimer ct;
     buttons but;
     alarm al1(td.getCurrentTime(), td.getCurrentWeekDay());
-    lcdInterface li(&td, &al1, &but);
+    alarm al2(td.getCurrentTime(), td.getCurrentWeekDay());
+    lcdInterface li(&td, &al1, &al2, &but);
     while (true)
     {
         static bool alarmStarted = false;
@@ -39,7 +40,7 @@ int main()
         {
             signalIncrementMin = false;
             static unsigned minCounter = 0;
-            if(!alarmStarted && al1.alarmTimeNow())
+            if(!alarmStarted && (al1.alarmTimeNow() || al2.alarmTimeNow()))
             {
                 minCounter = 0;
                 buz.activeBuz();

@@ -75,9 +75,9 @@ void lcdInterface::dateToLcd()
         timeData->setDateOnLcdUpdate();
 
         strcpy(tempDate, pDay);
-        strcat(tempDate, ":");
+        strcat(tempDate, "/");
         strcat(tempDate, pMonth);
-        strcat(tempDate, ":");
+        strcat(tempDate, "/");
         strcat(tempDate, pYear);
         setAddr(xNday, yNday);
         writeStringToLcd(tempDate, 11);
@@ -127,14 +127,31 @@ void lcdInterface::alarm1ToLcd(const unsigned * currentWeekDay)
     delete[] pAlarms;
 }
 
-void lcdInterface::alarm2ToLcd()
+void lcdInterface::alarm2ToLcd(const unsigned * currentWeekDay)
 {
+    const char * pHour;
+    const char * pMin;
+    const char * pAlarms;
+    char temp[6];
+
     setAddr(xA2, yA2);
     writeStringToLcd("A", 1);
+
     setAddr(xA2Hour, yA2Hour);
-    writeStringToLcd("17:33", 5);
+    pHour = pAlarm2->hourToString(currentWeekDay);
+    strcpy(temp, pHour);
+    strcat(temp, ":");
+    pMin = pAlarm2->minuteToString(currentWeekDay);
+    strcat(temp, pMin);
+    writeStringToLcd(temp, 5);
+
     setAddr(xA2Days, yA2Days);
-    writeStringToLcd("0000000", 7);
+    pAlarms = pAlarm2->weekAlarmsToString();
+    writeStringToLcd(pAlarms, 7);
+
+    delete[] pHour;
+    delete[] pMin;
+    delete[] pAlarms;
 }
 
 void lcdInterface::dhtToLcd()
@@ -154,7 +171,7 @@ void lcdInterface::printAll()
     timeToLcd();
     dateToLcd();
     alarm1ToLcd(timeData->getCurrentWeekDay());
-    alarm2ToLcd();
+    alarm2ToLcd(timeData->getCurrentWeekDay());
     batteryLevelToLcd();
     dhtToLcd();
 }
@@ -391,15 +408,26 @@ void lcdInterface::changeAlarm()
         }
         else{
             unsigned tempDay = positionDayAlarm - 7;
-            toggleDayAlarm2(tempDay);
+            if (positionHourMin == 0)
+            {
+                toggleHourAlarm2(tempDay);
+            }
+            else if (positionHourMin == 1)
+            {
+                toggleMinAlarm2(tempDay);
+            }
+            else
+            {
+                toggleDayAlarm2(tempDay);
+            }
             delay();
-            alarm1ToLcd(&tempDay);
+            alarm2ToLcd(&tempDay);
         }
 
         if (pButtons->checkMove())
         {
             positionDayAlarm++;
-            if (positionDayAlarm > 6)
+            if (positionDayAlarm > 13)
                 positionDayAlarm = 0;
             longDelay();
         }
@@ -442,11 +470,11 @@ void lcdInterface::toggleDayAlarm2(unsigned dayToToggle)
     {
         if (pButtons->checkIncrement() ||
             pButtons->checkDecrement())
-            pAlarm1->toggleActivateDeactivate(dayToToggle);
+            pAlarm2->toggleActivateDeactivate(dayToToggle);
         toggle = false;
     } else
     {
-        setAddr(xA2Days + wide * dayToToggle, yA1Days);
+        setAddr(xA2Days + wide * dayToToggle, yA2Days);
         writeCharToLcd(0x5f); //"_"
         toggle = true;
     }
@@ -479,6 +507,33 @@ void lcdInterface::toggleHourAlarm1(unsigned dayToToggle)
     }
 }
 
+void lcdInterface::toggleHourAlarm2(unsigned dayToToggle)
+{
+    static bool toggle = true;
+    if (toggle)
+    {
+        if (pButtons->checkIncrement())
+        {
+            pAlarm2->incrementHour(&dayToToggle);
+        }
+        else if (pButtons -> checkDecrement())
+        {
+            pAlarm2->decrementHour(&dayToToggle);
+        }
+
+        toggle = false;
+    }
+    else
+    {
+        setAddr(xA2Hour, yA2Hour);
+        writeCharToLcd(0x5f); //"_"
+        writeCharToLcd(0x5f); //"_"
+        setAddr(xA2Days + wide * dayToToggle, yA2Days);
+        writeCharToLcd(0x5f); //"_"
+        toggle = true;
+    }
+}
+
 void lcdInterface::toggleMinAlarm1(unsigned dayToToggle)
 {
     static bool toggle = true;
@@ -501,6 +556,33 @@ void lcdInterface::toggleMinAlarm1(unsigned dayToToggle)
         writeCharToLcd(0x5f); //"_"
         writeCharToLcd(0x5f); //"_"
         setAddr(xA1Days + wide * dayToToggle, yA1Days);
+        writeCharToLcd(0x5f); //"_"
+        toggle = true;
+    }
+}
+
+void lcdInterface::toggleMinAlarm2(unsigned dayToToggle)
+{
+    static bool toggle = true;
+    if (toggle)
+    {
+        if (pButtons->checkIncrement())
+        {
+            pAlarm2->incrementMin(&dayToToggle);
+        }
+        else if (pButtons -> checkDecrement())
+        {
+            pAlarm2->decrementMin(&dayToToggle);
+        }
+
+        toggle = false;
+    }
+    else
+    {
+        setAddr(xA2Hour + wide * 3, yA2Hour);
+        writeCharToLcd(0x5f); //"_"
+        writeCharToLcd(0x5f); //"_"
+        setAddr(xA2Days + wide * dayToToggle, yA2Days);
         writeCharToLcd(0x5f); //"_"
         toggle = true;
     }
