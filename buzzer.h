@@ -10,7 +10,7 @@ class buzzer
 {
 public:
     buzzer();
-    int checkActive();
+    bool checkActive();
     void activeBuz();
     void deactivateBuz();
     void makeSound();

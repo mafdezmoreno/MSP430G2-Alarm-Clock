@@ -12,7 +12,7 @@ void initMcu();
 unsigned signalIncrementSec = 0;
 buzzer buz;
 
-int main(void)
+int main()
 {
     static bool signalIncrementMin = false;
     static unsigned signalButton = 0;
@@ -23,7 +23,7 @@ int main(void)
     buttons but;
     alarm al1(td.getCurrentTime(), td.getCurrentWeekDay());
     lcdInterface li(&td, &al1, &but);
-    while (1)
+    while (true)
     {
         static bool alarmStarted = false;
         if (signalIncrementSec)

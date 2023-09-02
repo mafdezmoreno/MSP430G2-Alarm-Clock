@@ -218,8 +218,8 @@ void lcdInterface::toggleWeek()
         writeCharToLcd(0x5f); //"_"
         writeCharToLcd(0x5f); //"_"
         toggle = true;
-        timeData->callUpdateDate();
     }
+    timeData->callUpdateDate();
     delay();
     dateToLcd();
 }
@@ -241,8 +241,8 @@ void lcdInterface::toggleWeekDay()
         writeCharToLcd(0x5f); //"_"
         writeCharToLcd(0x5f); //"_"
         toggle = true;
-        timeData->callUpdateDate();
     }
+    timeData->callUpdateDate();
     delay();
     dateToLcd();
 }
@@ -263,8 +263,8 @@ void lcdInterface::toggleMonthDay()
         writeCharToLcd(0x5f); //"_"
         writeCharToLcd(0x5f); //"_"
         toggle = true;
-        timeData->callUpdateDate();
     }
+    timeData->callUpdateDate();
     delay();
     dateToLcd();
 }
@@ -285,8 +285,8 @@ void lcdInterface::toggleMonth()
         writeCharToLcd(0x5f); //"_"
         writeCharToLcd(0x5f); //"_"
         toggle = true;
-        timeData->callUpdateDate();
     }
+    timeData->callUpdateDate();
     delay();
     dateToLcd();
 }
@@ -307,8 +307,8 @@ void lcdInterface::toggleYear()
         writeCharToLcd(0x5f); //"_"
         writeCharToLcd(0x5f); //"_"
         toggle = true;
-        timeData->callUpdateDate();
     }
+    timeData->callUpdateDate();
     delay();
     dateToLcd();
 }
@@ -425,7 +425,7 @@ void lcdInterface::toggleDayAlarm1(unsigned dayToToggle)
     {
         if (pButtons->checkIncrement() ||
            pButtons->checkDecrement())
-            pAlarm1->toggleActiveDeactive(dayToToggle);
+            pAlarm1->toggleActivateDeactivate(dayToToggle);
         toggle = false;
     } else
     {
@@ -442,7 +442,7 @@ void lcdInterface::toggleDayAlarm2(unsigned dayToToggle)
     {
         if (pButtons->checkIncrement() ||
             pButtons->checkDecrement())
-            pAlarm1->toggleActiveDeactive(dayToToggle);
+            pAlarm1->toggleActivateDeactivate(dayToToggle);
         toggle = false;
     } else
     {

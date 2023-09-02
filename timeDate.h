@@ -18,7 +18,7 @@ struct dateType
 class timeDate
 {
 public:
-    timeDate(bool * signalIncrementMin);
+    explicit timeDate(bool * signalIncrementMin);
     ~timeDate();
 
     //get char functions
@@ -32,8 +32,8 @@ public:
     const char *getSecond();
 
     //get status functions
-    bool checkUpdatedDate();
-    bool checkUpdatedTime();
+    bool checkUpdatedDate() const;
+    bool checkUpdatedTime() const;
 
     //set status functions
     bool setTimeOnLcdUpdated();

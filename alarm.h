@@ -13,13 +13,10 @@ class alarm
 {
 public:
     alarm(const timeType *cTime, const unsigned *weekDay);
-    void setAlarm(unsigned weekDay, timeType alarmT);
-    aTime getAlarmStatus(unsigned weekDay);
     bool alarmTimeNow();
-    void stopCurrentAlarm();
     void clearAlarm(unsigned weekDay);
     void clearAllAlarms();
-    void toggleActiveDeactive(unsigned weekDay);
+    void toggleActivateDeactivate(unsigned weekDay);
     const char * weekAlarmsToString();
     const char * hourToString(const unsigned * weekDay);
     const char * minuteToString(const unsigned * weekDay);
@@ -29,7 +26,6 @@ public:
     void decrementMin(const unsigned  * weekDay);
 
 private:
-    bool alarmState;
     aTime weekDaysAlarms[7];
     const timeType * currentTime;
     const unsigned * currentWeekDay;

@@ -3,15 +3,15 @@
 timeDate::timeDate(bool * signalIncrementMin)
 {
     currentTime = new timeType;
-    currentTime->second = 55;
-    currentTime->minute = 44;
-    currentTime->hour = 23;
-    monthDay = 22;     //day of month
+    currentTime->second = 0;
+    currentTime->minute = 0;
+    currentTime->hour = 0;
+    monthDay = 1;
     weekDay = new unsigned;
-    *weekDay = 1;      // 1 = monday, 2 = tuesday ...
-    week = 24;
-    month = 11;
-    year = 21;
+    *weekDay = 0;      // 0 = monday, 1 = tuesday ...
+    week = 1;
+    month = 1;
+    year = 24;
     updatedTimeOnLcd = false;
     updatedDateOnLcd = false;
     incrementedMin = signalIncrementMin;
@@ -235,12 +235,12 @@ const char *timeDate::getYear()
 }
 
 // get status functions
-bool timeDate::checkUpdatedTime()
+bool timeDate::checkUpdatedTime() const
 {
     return updatedTimeOnLcd;
 }
 
-bool timeDate::checkUpdatedDate()
+bool timeDate::checkUpdatedDate() const
 {
     return updatedDateOnLcd;
 }

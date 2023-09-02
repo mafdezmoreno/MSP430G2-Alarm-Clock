@@ -6,24 +6,24 @@ buzzer::buzzer()
     initBuzzerPin();
 }
 
-int buzzer::checkActive()
+bool buzzer::checkActive()
 {
     if (buzActive)
     {
-        return 1;
+        return true;
     }
-    return 0;
+    return false;
 }
 
 void buzzer::activeBuz()
 {
-    buzActive = 1;
+    buzActive = true;
     initBuzzerPin();
 }
 
 void buzzer::deactivateBuz()
 {
-    buzActive = 0;
+    buzActive = false;
     clearBuzzerPin();
 }
 
