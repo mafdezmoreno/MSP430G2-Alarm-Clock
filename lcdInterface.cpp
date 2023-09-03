@@ -1,10 +1,11 @@
 #include "lcdInterface.h"
 
-lcdInterface::lcdInterface (timeDate *inData, alarm *al1, buttons * but)
+lcdInterface::lcdInterface (timeDate *inData, alarm *al1, alarm *al2, buttons * but)
 {
     pButtons = but;
     timeData = inData;
     pAlarm1 = al1;
+    pAlarm2 = al2;
     initLcd();
     cleanLcd();
     // Todo create an initialize alarm related variables
