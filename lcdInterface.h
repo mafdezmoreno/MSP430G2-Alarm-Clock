@@ -7,18 +7,19 @@
 #include "alarm.h"
 #include "stdio.h"
 #include "string.h"
+#include "dht.h"
 
 class lcdInterface
 {
 public:
-    lcdInterface (timeDate *inData, alarm *al1, alarm *al2, buttons *but);
+    lcdInterface (timeDate *inData, alarm *al1, alarm *al2, buttons *but, dht *d);
     ~lcdInterface();
     void cleanLcd ();
     void timeToLcd ();
     void dateToLcd ();
     void batteryLevelToLcd ();
     void alarm1ToLcd (const unsigned * currentWeekDay);
-    void alarm2ToLcd(const unsigned * currentWeekDay);
+    void alarm2ToLcd (const unsigned * currentWeekDay);
     void dhtToLcd ();
     void printAll ();
     void changeTime ();
@@ -42,6 +43,7 @@ private:
     buttons * pButtons;
     alarm * pAlarm1;
     alarm * pAlarm2;
+    dht * pDht;
 
     static const unsigned wide = 6;
 

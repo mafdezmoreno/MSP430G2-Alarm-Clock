@@ -1,3 +1,5 @@
+//based on: https://gist.github.com/DmitryMyadzelets/83b6e1384a1ee35a7f5f
+
 #ifndef PCD8544_H_
 #define PCD8544_H_
 

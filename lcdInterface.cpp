@@ -1,6 +1,6 @@
 #include "lcdInterface.h"
 
-lcdInterface::lcdInterface (timeDate *inData, alarm *al1, alarm *al2, buttons * but)
+lcdInterface::lcdInterface (timeDate *inData, alarm *al1, alarm *al2, buttons * but, dht * d)
 {
     pButtons = but;
     timeData = inData;
@@ -8,7 +8,7 @@ lcdInterface::lcdInterface (timeDate *inData, alarm *al1, alarm *al2, buttons * 
     pAlarm2 = al2;
     initLcd();
     cleanLcd();
-    // Todo create an initialize alarm related variables
+    pDht = d;
 }
 
 void lcdInterface::cleanLcd()
@@ -94,7 +94,6 @@ void lcdInterface::batteryLevelToLcd()
 {
     char temp[4];
     const char * pBat;
-
     strcpy(temp, "B:");
     strcat(temp, "2");     // TODO: Implement battery level read
     setAddr(xBat, yBat);
@@ -157,14 +156,14 @@ void lcdInterface::alarm2ToLcd(const unsigned * currentWeekDay)
 
 void lcdInterface::dhtToLcd()
 {
-    // Todo: Implement updtedDht on DHT new class
-    //humidity
+    const char * temp = pDht -> getLastHumidity();
     setAddr(xHr, yHr);
-    writeStringToLcd("HR41%", 5);
-    //temperature
+    writeStringToLcd(temp, 2);
+    delete[] temp;
+    temp = pDht -> getLastTemperature();
     setAddr(xTemp, yTemp);
-    writeStringToLcd("24.3C", 5);
-    //outdated = false;
+    writeStringToLcd(temp, 4);
+    delete[] temp;
 }
 
 void lcdInterface::printAll()

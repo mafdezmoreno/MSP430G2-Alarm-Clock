@@ -8,15 +8,18 @@ GEN_OPTS__FLAG :=
 GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
-"./buzzerTimer.obj" \
-"./clockTimer.obj" \
-"./timeDate.obj" \
 "./alarm.obj" \
 "./buttons.obj" \
 "./buzzer.obj" \
+"./buzzerTimer.obj" \
+"./clockTimer.obj" \
+"./dht.obj" \
+"./io.obj" \
 "./lcd5110.obj" \
 "./lcdInterface.obj" \
 "./main.obj" \
+"./timeDate.obj" \
+"./timer.obj" \
 "../lnk_msp430g2553.cmd" \
 $(GEN_CMDS__FLAG) \
 -llibc.a \
@@ -160,16 +163,10 @@ alarm_clock_msp430.txt: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "buzzerTimer.obj" "clockTimer.obj" "timeDate.obj" "alarm.obj" "buttons.obj" "buzzer.obj" "lcd5110.obj" "lcdInterface.obj" "main.obj" 
-	-$(RM) "buzzerTimer.d" "clockTimer.d" "timeDate.d" "alarm.d" "buttons.d" "buzzer.d" "lcd5110.d" "lcdInterface.d" "main.d" 
+	-$(RM) "alarm.obj" "buttons.obj" "buzzer.obj" "buzzerTimer.obj" "clockTimer.obj" "dht.obj" "io.obj" "lcd5110.obj" "lcdInterface.obj" "main.obj" "timeDate.obj" "timer.obj" 
+	-$(RM) "alarm.d" "buttons.d" "buzzer.d" "buzzerTimer.d" "clockTimer.d" "dht.d" "io.d" "lcd5110.d" "lcdInterface.d" "main.d" "timeDate.d" "timer.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
-
-upload:
-	$(MAKE) clean
-	$(MAKE) alarm_clock_msp430.out
-	$(MAKE) alarm_clock_msp430.txt
-	MSP430Flasher -w alarm_clock_msp430.txt -z [VCC]
 
 secondary-outputs: $(BIN_OUTPUTS)
 

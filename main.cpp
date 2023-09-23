@@ -5,11 +5,12 @@
 #include "msp430g2553.h"
 #include "timeDate.h"
 #include "alarm.h"
-
+#include "dht.h"
+#include "io.h"
 
 void initMcu();
-
 unsigned signalIncrementSec = 0;
+dht d;
 buzzer buz;
 
 int main()
@@ -53,6 +54,7 @@ int main()
                 alarmStarted = false;
             }
             minCounter++;
+            d.newMeasurePetition();
         }
         signalButton = but.getSignalButton();
         switch (signalButton)
@@ -138,4 +140,5 @@ void initMcu()
     //BCSCTL1, Basic Clock System Control Register 1
     BCSCTL1 = CALBC1_1MHZ; //Copy the calibration data
 
+    __bis_SR_register(GIE); // Enable interrupts
 }

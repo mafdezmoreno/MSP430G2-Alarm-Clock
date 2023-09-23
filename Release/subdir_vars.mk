@@ -4,72 +4,90 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../buzzerTimer.cpp \
-../clockTimer.cpp \
-../timeDate.cpp \
 ../alarm.cpp \
 ../buttons.cpp \
 ../buzzer.cpp \
+../buzzerTimer.cpp \
+../clockTimer.cpp \
+../dht.cpp \
+../io.cpp \
 ../lcd5110.cpp \
 ../lcdInterface.cpp \
-../main.cpp 
+../main.cpp \
+../timeDate.cpp \
+../timer.cpp 
 
 CMD_SRCS += \
 ../lnk_msp430g2553.cmd 
 
 OBJS += \
-./buzzerTimer.obj \
-./clockTimer.obj \
-./timeDate.obj \
 ./alarm.obj \
 ./buttons.obj \
 ./buzzer.obj \
+./buzzerTimer.obj \
+./clockTimer.obj \
+./dht.obj \
+./io.obj \
 ./lcd5110.obj \
 ./lcdInterface.obj \
-./main.obj 
+./main.obj \
+./timeDate.obj \
+./timer.obj 
 
 CPP_DEPS += \
-./buzzerTimer.d \
-./clockTimer.d \
-./timeDate.d \
 ./alarm.d \
 ./buttons.d \
 ./buzzer.d \
+./buzzerTimer.d \
+./clockTimer.d \
+./dht.d \
+./io.d \
 ./lcd5110.d \
 ./lcdInterface.d \
-./main.d 
+./main.d \
+./timeDate.d \
+./timer.d 
 
 OBJS__QUOTED += \
-"buzzerTimer.obj" \
-"clockTimer.obj" \
-"timeDate.obj" \
 "alarm.obj" \
 "buttons.obj" \
 "buzzer.obj" \
+"buzzerTimer.obj" \
+"clockTimer.obj" \
+"dht.obj" \
+"io.obj" \
 "lcd5110.obj" \
 "lcdInterface.obj" \
-"main.obj" 
+"main.obj" \
+"timeDate.obj" \
+"timer.obj" 
 
 CPP_DEPS__QUOTED += \
-"buzzerTimer.d" \
-"clockTimer.d" \
-"timeDate.d" \
 "alarm.d" \
 "buttons.d" \
 "buzzer.d" \
+"buzzerTimer.d" \
+"clockTimer.d" \
+"dht.d" \
+"io.d" \
 "lcd5110.d" \
 "lcdInterface.d" \
-"main.d" 
+"main.d" \
+"timeDate.d" \
+"timer.d" 
 
 CPP_SRCS__QUOTED += \
-"../buzzerTimer.cpp" \
-"../clockTimer.cpp" \
-"../timeDate.cpp" \
 "../alarm.cpp" \
 "../buttons.cpp" \
 "../buzzer.cpp" \
+"../buzzerTimer.cpp" \
+"../clockTimer.cpp" \
+"../dht.cpp" \
+"../io.cpp" \
 "../lcd5110.cpp" \
 "../lcdInterface.cpp" \
-"../main.cpp" 
+"../main.cpp" \
+"../timeDate.cpp" \
+"../timer.cpp" 
 
 

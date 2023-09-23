@@ -4,9 +4,6 @@ clockTimer::clockTimer()
 {
     initTimer0();
     upTimer0();
-    __bis_SR_register(GIE); // Enable interrupts
-    // The previous line is the same as:
-    // TACTL |= TAIE
 }
 
 void clockTimer::initTimer0()
@@ -14,7 +11,7 @@ void clockTimer::initTimer0()
 
     // Timer0_A Control Register
     TACTL |= TASSEL_1 + ID_3;
-    // ID_3: Input divider (SMCLK/8)
+    // ID_3: Input divider by 8
     // TASSEL_1: Use ACLK as source for timer
     // ACLK == 32768Hz (Current clock source)
     // ACLK/8 = 4096Hz
