@@ -8,6 +8,7 @@ GEN_OPTS__FLAG :=
 GEN_CMDS__FLAG := 
 
 ORDERED_OBJS += \
+"./adc.obj" \
 "./alarm.obj" \
 "./buttons.obj" \
 "./buzzer.obj" \
@@ -163,10 +164,19 @@ alarm_clock_msp430.txt: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "alarm.obj" "buttons.obj" "buzzer.obj" "buzzerTimer.obj" "clockTimer.obj" "dht.obj" "io.obj" "lcd5110.obj" "lcdInterface.obj" "main.obj" "timeDate.obj" "timer.obj" 
-	-$(RM) "alarm.d" "buttons.d" "buzzer.d" "buzzerTimer.d" "clockTimer.d" "dht.d" "io.d" "lcd5110.d" "lcdInterface.d" "main.d" "timeDate.d" "timer.d" 
+	-$(RM) "adc.obj" "alarm.obj" "buttons.obj" "buzzer.obj" "buzzerTimer.obj" "clockTimer.obj" "dht.obj" "io.obj" "lcd5110.obj" "lcdInterface.obj" "main.obj" "timeDate.obj" "timer.obj" 
+	-$(RM) "adc.d" "alarm.d" "buttons.d" "buzzer.d" "buzzerTimer.d" "clockTimer.d" "dht.d" "io.d" "lcd5110.d" "lcdInterface.d" "main.d" "timeDate.d" "timer.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
+
+compile:
+	$(MAKE) clean
+	$(MAKE) alarm_clock_msp430.out
+	$(MAKE) alarm_clock_msp430.txt
+
+run:
+	$(MAKE) compile
+	MSP430Flasher -w alarm_clock_msp430.txt -z [VCC]
 
 secondary-outputs: $(BIN_OUTPUTS)
 

@@ -4,6 +4,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../adc.cpp \
 ../alarm.cpp \
 ../buttons.cpp \
 ../buzzer.cpp \
@@ -21,6 +22,7 @@ CMD_SRCS += \
 ../lnk_msp430g2553.cmd 
 
 OBJS += \
+./adc.obj \
 ./alarm.obj \
 ./buttons.obj \
 ./buzzer.obj \
@@ -35,6 +37,7 @@ OBJS += \
 ./timer.obj 
 
 CPP_DEPS += \
+./adc.d \
 ./alarm.d \
 ./buttons.d \
 ./buzzer.d \
@@ -49,6 +52,7 @@ CPP_DEPS += \
 ./timer.d 
 
 OBJS__QUOTED += \
+"adc.obj" \
 "alarm.obj" \
 "buttons.obj" \
 "buzzer.obj" \
@@ -63,6 +67,7 @@ OBJS__QUOTED += \
 "timer.obj" 
 
 CPP_DEPS__QUOTED += \
+"adc.d" \
 "alarm.d" \
 "buttons.d" \
 "buzzer.d" \
@@ -77,6 +82,7 @@ CPP_DEPS__QUOTED += \
 "timer.d" 
 
 CPP_SRCS__QUOTED += \
+"../adc.cpp" \
 "../alarm.cpp" \
 "../buttons.cpp" \
 "../buzzer.cpp" \
