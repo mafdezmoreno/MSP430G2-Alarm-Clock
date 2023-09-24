@@ -43,13 +43,13 @@ public:
     bool checkDecrement();
     bool checkAlarm();
     unsigned getSignalButton();
+    static void initMove();
 
 private:
     static void initTime();
     static bool buttonTime();
     static void initIncrement();
     static bool buttonIncrement();
-    static void initMove();
     static bool buttonMove();
     static void initDecrement();
     static bool buttonDecrement();

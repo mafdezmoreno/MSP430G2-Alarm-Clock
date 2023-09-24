@@ -14,10 +14,14 @@ Warning: LaunchPads with eZ430-RF2500 will not work with linux or mac, look for 
 ### Functions Implemented
 
  - [X] Clock
- - [X] Control to set clock time and date time (of every element).
- - [ ] Alarm
- - [ ] Control to set alarm
- - [ ] Date
+ - [X] Date
+ - [X] Alarm
+ - [X] Control to set clock time and date time.
+ - [X] Control to set alarm
+ - [X] Battery level monitoring
+ - [ ] Humidity and temperature with dht sensor
+ - [ ] Auto lcd light on if some button is pushed
+ - [ ] Low power mode
 
 ## Compiling the Code
 
@@ -53,10 +57,19 @@ Connect the following signals from the debugger to the target MCU.
 A Kicad project is included in this repo. This projects include schematics and PCB.
 
 Todo:
- - [ ] Review of connections
- - [ ] PCB Design
- - [ ] Gerber files generation and PCB ordering.
+ - [X] Review of connections
+ - [X] PCB Design
+ - [X] Gerber files generation and PCB ordering.
+
+![alt text](PCB_A_C/PCB_A_C.jpg)
 
 ## Other Comments and Problems Working With MSP430
 
+The real time operations can be affected for encapsulation and compiler configuration and introduce in the compiled code unexpected delays. The solution can involve simplify the code (reduce encapsulation to make it "easier" to the compiler) and/or tune the compiler settings.
 
+# Useful resources
+
+ - [MSP430F2xx, MSP430G2xx Family User’s Guide](https://www.ti.com/lit/ug/slau144k/slau144k.pdf?ts=1694900974657&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FMSP430F2418)
+ - [MSP Flasher User’s Guide](https://www.ti.com/lit/ug/slau654e/slau654e.pdf?ts=1694985823973&ref_url=https%253A%252F%252Fwww.google.com%252F)
+ - [MSP430 Optimizing C/C++ Compiler v21.6.0.LTS](https://www.ti.com/lit/ug/slau132y/slau132y.pdf?ts=1695037938667)
+ - [MSP430G2x53 datasheet](https://www.ti.com/lit/ds/symlink/msp430g2553.pdf?ts=1695283635994&ref_url=https%253A%252F%252Fwww.ti.com%252Fproduct%252FMSP430G2553)

@@ -8,6 +8,7 @@
 #include "stdio.h"
 #include "string.h"
 #include "dht.h"
+#include "adc.h"
 
 class lcdInterface
 {
@@ -44,6 +45,7 @@ private:
     alarm * pAlarm1;
     alarm * pAlarm2;
     dht * pDht;
+    batLvl * pBatLvl;
 
     static const unsigned wide = 6;
 

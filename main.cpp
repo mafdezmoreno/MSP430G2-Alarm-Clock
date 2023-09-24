@@ -30,7 +30,7 @@ int main()
         static bool alarmStarted = false;
         if (signalIncrementSec)
         {
-            while(signalIncrementSec)
+            while (signalIncrementSec)
             {
                 td.incrementSecond();
                 signalIncrementSec--;
@@ -41,13 +41,12 @@ int main()
         {
             signalIncrementMin = false;
             static unsigned minCounter = 0;
-            if(!alarmStarted && (al1.alarmTimeNow() || al2.alarmTimeNow()))
+            if (!alarmStarted && (al1.alarmTimeNow() || al2.alarmTimeNow()))
             {
                 minCounter = 0;
                 buz.activeBuz();
                 alarmStarted = true;
-            }
-            else if (minCounter >= 5 && alarmStarted)
+            } else if (minCounter >= 5 && alarmStarted)
             {  // alarm can be on for 5 minutes.
                 buz.deactivateBuz();
                 minCounter = 0;
@@ -55,6 +54,7 @@ int main()
             }
             minCounter++;
             d.newMeasurePetition();
+            li.batteryLevelToLcd();
         }
         signalButton = but.getSignalButton();
         switch (signalButton)

@@ -9,6 +9,12 @@ lcdInterface::lcdInterface (timeDate *inData, alarm *al1, alarm *al2, buttons * 
     initLcd();
     cleanLcd();
     pDht = d;
+    pBatLvl = new batLvl;
+}
+
+lcdInterface::~lcdInterface()
+{
+    delete pBatLvl;
 }
 
 void lcdInterface::cleanLcd()
@@ -92,12 +98,14 @@ void lcdInterface::dateToLcd()
 
 void lcdInterface::batteryLevelToLcd()
 {
-    char temp[4];
-    const char * pBat;
-    strcpy(temp, "B:");
-    strcat(temp, "2");     // TODO: Implement battery level read
+    char batLvl[4]{"B:0"};
+    batLvl[2] = pBatLvl->getBatLvl();
+    pButtons->initMove(); //Restoring input function of pin
+    // Restarting lcd
+    initLcd();
+    cleanLcd();
     setAddr(xBat, yBat);
-    writeStringToLcd(temp,3);
+    writeStringToLcd(batLvl, 3);
 }
 
 void lcdInterface::alarm1ToLcd(const unsigned * currentWeekDay)
@@ -172,7 +180,6 @@ void lcdInterface::printAll()
     dateToLcd();
     alarm1ToLcd(timeData->getCurrentWeekDay());
     alarm2ToLcd(timeData->getCurrentWeekDay());
-    batteryLevelToLcd();
     dhtToLcd();
 }
 
