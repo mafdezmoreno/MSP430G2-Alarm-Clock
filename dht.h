@@ -23,6 +23,7 @@ class dht
 {
 public:
     dht();
+    ~dht();
     bool readDht();
     const char * getHumidity();
     const char * getTemperature();
@@ -30,6 +31,7 @@ public:
 private:
     unsigned char tempDigits[3];
     unsigned char humiDigits[2];
+    timer1 *pT;
 
     void readData(unsigned char * data);
     void startSignal();

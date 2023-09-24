@@ -10,7 +10,6 @@
 
 void initMcu();
 unsigned signalIncrementSec = 0;
-dht d;
 buzzer buz;
 
 int main()
@@ -25,6 +24,15 @@ int main()
     dht d;
     alarm al1(td.getCurrentTime(), td.getCurrentWeekDay());
     alarm al2(td.getCurrentTime(), td.getCurrentWeekDay());
+
+    // TODO: testing:
+    enableLed();
+    ledOff();
+    enableDisplayLed();
+    displayLedOn();
+    __delay_cycles(1000000);
+    // End Testing part
+
     lcdInterface li(&td, &al1, &al2, &but, &d);
     while (true)
     {
@@ -36,6 +44,7 @@ int main()
                 td.incrementSecond();
                 signalIncrementSec--;
             }
+            d.readDht();
             li.printAll();
         }
         if (signalIncrementMin)
@@ -89,7 +98,7 @@ int main()
 
 //Timer ISR to increment seconds
 #pragma vector = TIMER0_A0_VECTOR
-__interrupt void Timer_A0(void)
+__interrupt void timerA0(void)
 {
     static unsigned long counter = 0;
     if (counter == 256)

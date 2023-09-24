@@ -150,7 +150,7 @@ all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 alarm_clock_msp430.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: MSP430 Linker'
-	"/Applications/ti/ccs1240/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmsp -O2 --use_hw_mpy=none --advice:power="all" --define=__MSP430G2553__ --c++14 --relaxed_ansi --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number -z -m"alarm_clock_msp430.map" --heap_size=80 --stack_size=80 -i"/Applications/ti/ccs1240/ccs/ccs_base/msp430/include" -i"/Applications/ti/ccs1240/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/lib" -i"/Applications/ti/ccs1240/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="alarm_clock_msp430_linkInfo.xml" --use_hw_mpy=none --rom_model -o "alarm_clock_msp430.out" $(ORDERED_OBJS)
+	"/Applications/ti/ccs1240/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/bin/cl430" -vmsp -O2 --opt_for_speed=5 --use_hw_mpy=none --advice:power="all" --define=__MSP430G2553__ --c++14 --relaxed_ansi --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number -z -m"alarm_clock_msp430.map" --heap_size=80 --stack_size=80 -i"/Applications/ti/ccs1240/ccs/ccs_base/msp430/include" -i"/Applications/ti/ccs1240/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/lib" -i"/Applications/ti/ccs1240/ccs/tools/compiler/ti-cgt-msp430_21.6.1.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="alarm_clock_msp430_linkInfo.xml" --use_hw_mpy=none --rom_model -o "alarm_clock_msp430.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
