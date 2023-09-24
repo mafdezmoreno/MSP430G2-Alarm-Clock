@@ -22,9 +22,10 @@ int main()
     timeDate td(&signalIncrementMin);
     clockTimer ct;
     buttons but;
+    dht d;
     alarm al1(td.getCurrentTime(), td.getCurrentWeekDay());
     alarm al2(td.getCurrentTime(), td.getCurrentWeekDay());
-    lcdInterface li(&td, &al1, &al2, &but);
+    lcdInterface li(&td, &al1, &al2, &but, &d);
     while (true)
     {
         static bool alarmStarted = false;
@@ -53,7 +54,6 @@ int main()
                 alarmStarted = false;
             }
             minCounter++;
-            d.newMeasurePetition();
             li.batteryLevelToLcd();
         }
         signalButton = but.getSignalButton();

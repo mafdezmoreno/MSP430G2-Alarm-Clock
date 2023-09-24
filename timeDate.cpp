@@ -3,7 +3,7 @@
 timeDate::timeDate(bool * signalIncrementMin)
 {
     currentTime = new timeType;
-    currentTime->second = 0;
+    currentTime->second = 45;
     currentTime->minute = 0;
     currentTime->hour = 0;
     monthDay = 1;

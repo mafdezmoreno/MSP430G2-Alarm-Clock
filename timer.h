@@ -1,12 +1,19 @@
+#ifndef ALARM_CLOCK_MSP430_TIMER_H
+#define ALARM_CLOCK_MSP430_TIMER_H
 
-#ifndef TIMER_H_
-#define TIMER_H_
+#define CLR(x,y)	(x &= ~(y))
 
-class timer
+#include "msp430g2553.h"
+
+class timer1
 {
 public:
-    timer();
-    virtual ~timer();
+    void usWait(const unsigned * usDelay);
+    void msWait(const unsigned * msDelay);
+    void usInitTimer(const unsigned * us);
+    void msInitTimer(const unsigned * ms);
+    bool timeOut();
+    void stopTimer();
 };
 
-#endif /* TIMER_H_ */
+#endif /* ALARM_CLOCK_MSP430_TIMER_H */

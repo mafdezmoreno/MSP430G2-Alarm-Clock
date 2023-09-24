@@ -164,13 +164,13 @@ void lcdInterface::alarm2ToLcd(const unsigned * currentWeekDay)
 
 void lcdInterface::dhtToLcd()
 {
-    const char * temp = pDht -> getLastHumidity();
+    const char * temp = pDht -> getHumidity();
     setAddr(xHr, yHr);
-    writeStringToLcd(temp, 2);
+    writeStringToLcd(temp, 5);
     delete[] temp;
-    temp = pDht -> getLastTemperature();
+    temp = pDht -> getTemperature();
     setAddr(xTemp, yTemp);
-    writeStringToLcd(temp, 4);
+    writeStringToLcd(temp, 5);
     delete[] temp;
 }
 
