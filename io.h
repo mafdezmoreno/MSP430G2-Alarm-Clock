@@ -9,14 +9,23 @@
 #define LED_PORT 2
 #define LED_BIT BIT4
 
-void enableDisplayLed();
-void disableDisplayLed();
-void displayLedOff();
-void displayLedOn();
-void enableLed();
-void disableLed();
 void ledOff();
 void ledOn();
 void toggleLed();
+void enableLed();
+
+class lcdLight
+{
+public:
+    lcdLight();
+    void off();
+    void on();
+    void countDown();
+    void resetCounter();
+private:
+    unsigned counter;
+    void enable();
+    void disable();
+};
 
 #endif /* IO_H_ */

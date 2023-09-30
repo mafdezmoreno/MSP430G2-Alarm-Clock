@@ -7,6 +7,6 @@
 - [X] Alarm and buzzer
 - [X] Alarm days activation
 - [X] Analog read to check battery level
-- [ ] Dht to show temperature and humidity
+- [X] Dht to show temperature and humidity
 - [ ] Low power mode, to save battery
 - [ ] Remove loops delays

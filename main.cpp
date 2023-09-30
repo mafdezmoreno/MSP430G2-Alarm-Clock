@@ -24,12 +24,12 @@ int main()
     dht d;
     alarm al1(td.getCurrentTime(), td.getCurrentWeekDay());
     alarm al2(td.getCurrentTime(), td.getCurrentWeekDay());
+    lcdLight light;
 
     // TODO: testing:
     enableLed();
     ledOff();
-    enableDisplayLed();
-    displayLedOn();
+    light.on(); // Todo: To remove after tests
     __delay_cycles(1000000);
     // End Testing part
 
@@ -46,6 +46,7 @@ int main()
             }
             d.readDht();
             li.printAll();
+            light.countDown();
         }
         if (signalIncrementMin)
         {
@@ -90,7 +91,7 @@ int main()
             case 16:
                 buz.deactivateBuz();
                 alarmStarted = false;
-                // TODO: led light activation;
+                light.resetCounter();
         }
         ct.delay(500);
     }
@@ -132,7 +133,9 @@ __interrupt void timerA0(void)
             start++;
         }
         else
+        {
             start = 0;
+        }
     }
 }
 
