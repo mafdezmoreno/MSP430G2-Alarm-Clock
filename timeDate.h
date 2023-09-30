@@ -75,10 +75,8 @@ private:
     bool updatedTimeOnLcd;
     bool updatedDateOnLcd;
     bool * incrementedMin;
-
-    const char *weekDays[7] = {"MON", "TUE",
-                               "WED", "THU",
-                               "FRI", "SAT", "SUN"};
+    static const char *weekDays[7];
+    static const unsigned daysMonth[12];
 
     const char *intToString(unsigned value);
 };

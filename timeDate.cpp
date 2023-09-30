@@ -23,17 +23,6 @@ timeDate::~timeDate()
     delete weekDay;
 }
 
-const char *timeDate::intToString(unsigned value)
-{
-    char * str;
-    str = new char[3] {"00"};
-
-    str[0] = value/10 + '0';
-    str[1] = value%10 + '0';
-
-    return str;
-}
-
 void timeDate::incrementYear()
 {
     year++;
@@ -93,11 +82,9 @@ void timeDate::decrementWeek()
 
 void timeDate::incrementMonthDay()
 {
-
     monthDay++;
-    if (monthDay > 31)
+    if (monthDay > daysMonth[month-1])
     {
-        // ToDo: Incremented based in current month days
         incrementMonth();
         monthDay = 1;
     }
@@ -273,4 +260,23 @@ const timeType * timeDate::getCurrentTime()
 const unsigned * timeDate::getCurrentWeekDay()
 {
     return weekDay;
+}
+
+const char *timeDate::weekDays[7] = {"MON", "TUE",
+                                     "WED", "THU",
+                                     "FRI", "SAT", "SUN"};
+
+const unsigned timeDate::daysMonth[12] = {31, 28, 31, 30,
+                                          31, 30, 31, 31,
+                                          30, 31, 30, 31};
+
+const char *timeDate::intToString(unsigned value)
+{
+    char * str;
+    str = new char[3] {"00"};
+
+    str[0] = value/10 + '0';
+    str[1] = value%10 + '0';
+
+    return str;
 }

@@ -11,10 +11,10 @@
 - [X] Low power mode, to save battery.
 
 ## 30/09/2023
+- [X] Correct moth increments with the number of days of each month.
 - [ ] Remove loops delays.
 - [ ] Add some function to the LED (previously used as debug tool)
 - [ ] Improve encapsulation. Move remaining isolated functions inside classes.
 - [ ] Correct push buttons positions.
-- [ ] Correct moth increments with the number of days of each month.
 - [ ] Review of date class and implement date struct type.
 - [ ] Remove unused methods and cleaning.
