@@ -19,9 +19,9 @@ Warning: LaunchPads with eZ430-RF2500 will not work with linux or mac, look for 
  - [X] Control to set clock time and date time.
  - [X] Control to set alarm
  - [X] Battery level monitoring
- - [ ] Humidity and temperature with dht sensor
- - [ ] Auto lcd light on if some button is pushed
- - [ ] Low power mode
+ - [X] Humidity and temperature with dht sensor
+ - [X] Auto lcd light on if some button is pushed
+ - [X] Low power mode. This mode reduces minimum power consumption from 0.71mA to 0.33mA
 
 ## Compiling the Code
 

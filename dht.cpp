@@ -37,7 +37,7 @@ bool dht::readDht()
             readData(tmpData);
             powerOff();
             return analyzeResponse(tmpData);
-        case 10:
+        case 20:
             counter = 0;
     }
     return false;

@@ -1,3 +1,5 @@
+#define LOW_POWER
+
 #include "buzzer.h"
 #include "buzzerTimer.h"
 #include "clockTimer.h"
@@ -31,7 +33,7 @@ int main()
     enableLed();
     ledOff();
     light.on(); // Todo: To remove after tests
-    __delay_cycles(1000000);
+    __delay_cycles(200000);
     // End Testing part
 
     lcdInterface li(&td, &al1, &al2, &but, &d);
@@ -94,7 +96,11 @@ int main()
                 alarmStarted = false;
                 light.resetCounter();
         }
+#ifdef LOW_POWER
+        __bis_SR_register(LPM3_bits);
+#else
         ct.delay(500);
+#endif
     }
 }
 
@@ -118,6 +124,9 @@ __interrupt void timerA0(void)
     {
         signalIncrementSec++;
     }
+#ifdef LOW_POWER
+    __bic_SR_register_on_exit(LPM3_bits);
+#endif
 }
 
 void initMcu()
