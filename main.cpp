@@ -10,7 +10,9 @@
 
 void initMcu();
 unsigned signalIncrementSec = 0;
-buzzer buz;
+clockTimer ct;
+buzzer buz(&ct);
+void buzzerControl();
 
 int main()
 {
@@ -19,7 +21,6 @@ int main()
 
     initMcu();
     timeDate td(&signalIncrementMin);
-    clockTimer ct;
     buttons but;
     dht d;
     alarm al1(td.getCurrentTime(), td.getCurrentWeekDay());
@@ -102,18 +103,43 @@ int main()
 __interrupt void timerA0(void)
 {
     static unsigned long counter = 0;
-    if (counter == 256)
-    {
-        signalIncrementSec++;
-        counter = 0;
-    }
-    counter++;
-
-    static unsigned start = 0;
-    static const unsigned stop = 40;
 
     if (buz.getBuzActive())
     {
+        if (counter == 256)
+        {
+            signalIncrementSec++;
+            counter = 0;
+        }
+        counter++;
+        buzzerControl();
+    }
+    else
+    {
+        signalIncrementSec++;
+    }
+}
+
+void initMcu()
+{
+    WDTCTL = WDTPW + WDTHOLD; //Stop watchdog timer
+
+    //MCLK=SMCLK=1Mhz
+    //DCOCTL, DCO Control Register
+    DCOCTL = 0;            //clears DCOCTL to set the DCOCLK to the lowest setting.
+    DCOCTL = CALDCO_1MHZ;  //Copy the calibration data
+
+    //BCSCTL1, Basic Clock System Control Register 1
+    BCSCTL1 = CALBC1_1MHZ; //Copy the calibration data
+
+    __bis_SR_register(GIE); // Enable interrupts
+}
+
+void buzzerControl()
+{
+    static unsigned start = 0;
+    static const unsigned stop = 40;
+
         if (start < 2 * stop)
         {
             buz.makeSound();
@@ -136,21 +162,4 @@ __interrupt void timerA0(void)
         {
             start = 0;
         }
-    }
-}
-
-void initMcu()
-{
-
-    WDTCTL = WDTPW + WDTHOLD; //Stop watchdog timer
-
-    //MCLK=SMCLK=1Mhz
-    //DCOCTL, DCO Control Register
-    DCOCTL = 0;            //clears DCOCTL to set the DCOCLK to the lowest setting.
-    DCOCTL = CALDCO_1MHZ;  //Copy the calibration data
-
-    //BCSCTL1, Basic Clock System Control Register 1
-    BCSCTL1 = CALBC1_1MHZ; //Copy the calibration data
-
-    __bis_SR_register(GIE); // Enable interrupts
 }

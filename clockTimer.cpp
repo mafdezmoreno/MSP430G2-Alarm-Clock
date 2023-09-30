@@ -3,7 +3,7 @@
 clockTimer::clockTimer()
 {
     initTimer0();
-    upTimer0();
+    upTimerOneSec();
 }
 
 void clockTimer::initTimer0()
@@ -24,10 +24,18 @@ void clockTimer::stopTimer0()
     TACCTL0 &= ~CCIE; // Disable Interrupts on Timer
 }
 
-void clockTimer::upTimer0()
+void clockTimer::upTimerBuzz()
 {
-    //TACCR0 = 4096; // callback every 1 sec
+    stopTimer0();
     TACCR0 = 16; // callback every 3.9 ms (for buzzer)
+    TACCTL0 |= CCIE;
+    TACTL |= MC_1;   // Up mode: the timer counts up to TACCR0
+}
+
+void clockTimer::upTimerOneSec()
+{
+    stopTimer0();
+    TACCR0 = 4096; // callback every 1 sec
     TACCTL0 |= CCIE;
     TACTL |= MC_1;   // Up mode: the timer counts up to TACCR0
 }

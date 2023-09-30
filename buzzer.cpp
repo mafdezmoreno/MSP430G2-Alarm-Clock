@@ -1,9 +1,10 @@
 #include "buzzer.h"
 
-buzzer::buzzer()
+buzzer::buzzer(clockTimer * Ct)
 {
     buzActive = false;
     initBuzzerPin();
+    pCt = Ct;
 }
 
 bool buzzer::checkActive()
@@ -19,12 +20,14 @@ void buzzer::activeBuz()
 {
     buzActive = true;
     initBuzzerPin();
+    pCt->upTimerBuzz();
 }
 
 void buzzer::deactivateBuz()
 {
     buzActive = false;
     clearBuzzerPin();
+    pCt->upTimerOneSec();
 }
 
 void buzzer::initBuzzerPin()
